@@ -3,10 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Das solar Solutions – Solar Energy Solutions</title>
+<title>Das Solar Solutions – Solar Energy Solutions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- ✅ EmailJS SDK — sends email directly from browser, no server needed -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ──────────────────────────────────────────────────────────────────
+  //  EMAILJS SETUP — Follow these 5 steps to activate email delivery:
+  //
+  //  STEP 1: Go to https://www.emailjs.com and create a FREE account
+  //  STEP 2: Add an Email Service (Gmail recommended) → copy SERVICE ID
+  //  STEP 3: Create an Email Template → copy TEMPLATE ID
+  //           In the template body use these variables:
+  //             {{from_name}}   — sender's name
+  //             {{from_email}}  — sender's email
+  //             {{phone}}       — phone number
+  //             {{service}}     — service selected
+  //             {{address}}     — installation address
+  //             {{message}}     — message text
+  //             {{to_email}}    — your receiving email
+  //  STEP 4: Go to Account → copy your PUBLIC KEY
+  //  STEP 5: Replace the three placeholder values below:
+  // ──────────────────────────────────────────────────────────────────
+  const EMAILJS_SERVICE_ID  = 'service_q907ut2';   // e.g. 'service_abc123'
+  const EMAILJS_TEMPLATE_ID = 'template_7ygv7rk';  // e.g. 'template_xyz789'
+  const EMAILJS_PUBLIC_KEY  = 'zcfuIGJjNq9Kuxjl4';   // e.g. 'abc123XYZ'
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+</script>
+
 <style>
 * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
 body { font-family:'DM Sans',sans-serif; background:#f0fdf4; color:#1a2e1a; overflow-x:hidden; }
@@ -34,6 +62,7 @@ nav {
 
 .btn-yellow { background:linear-gradient(135deg,#facc15,#fde047); color:#14532d; font-family:'Syne',sans-serif; font-weight:800; border:none; cursor:pointer; border-radius:10px; transition:transform 0.15s,box-shadow 0.15s; box-shadow:0 4px 15px rgba(250,204,21,0.4); }
 .btn-yellow:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(250,204,21,0.5); }
+.btn-yellow:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
 
 .btn-green { background:linear-gradient(135deg,#16a34a,#22c55e); color:#fff; font-family:'Syne',sans-serif; font-weight:700; border:none; cursor:pointer; border-radius:10px; transition:transform 0.15s,box-shadow 0.15s; box-shadow:0 4px 15px rgba(22,163,74,0.35); }
 .btn-green:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(22,163,74,0.45); }
@@ -50,13 +79,11 @@ section { scroll-margin-top:72px; }
 
 .slider-track { transition:transform 0.7s cubic-bezier(0.77,0,0.18,1); }
 
-/* Unified service card — all white, no alternating colors */
 .service-card { background:#fff; border:2px solid #dcfce7; border-radius:20px; transition:all 0.25s; }
 .service-card:hover { border-color:#86efac; box-shadow:0 20px 50px rgba(22,163,74,0.12); transform:translateY(-6px); }
 
 .icon-box { width:56px; height:56px; border-radius:14px; background:linear-gradient(135deg,#dcfce7,#bbf7d0); display:flex; align-items:center; justify-content:center; }
 
-/* Unified scheme card — all white, no alternating header colors */
 .scheme-card { border-radius:22px; overflow:hidden; border:2px solid #dcfce7; transition:all 0.25s; }
 .scheme-card:hover { border-color:#22c55e; box-shadow:0 16px 48px rgba(22,163,74,0.15); }
 .scheme-popular { border-color:#16a34a; box-shadow:0 16px 48px rgba(22,163,74,0.2); }
@@ -80,57 +107,33 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
 
 .glow { position:absolute; border-radius:50%; pointer-events:none; }
 
+/* Toast notification */
+#toast {
+  position:fixed; bottom:24px; right:24px; z-index:9999;
+  padding:14px 22px; border-radius:14px; font-family:'Syne',sans-serif; font-weight:700; font-size:0.9rem;
+  box-shadow:0 8px 30px rgba(0,0,0,0.18); transform:translateY(80px); opacity:0;
+  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none;
+}
+#toast.show { transform:translateY(0); opacity:1; }
+#toast.success { background:linear-gradient(135deg,#16a34a,#22c55e); color:#fff; }
+#toast.error   { background:linear-gradient(135deg,#dc2626,#ef4444); color:#fff; }
+
+/* Loading spinner inside button */
+.spinner {
+  display:inline-block; width:16px; height:16px; border:2.5px solid rgba(20,83,45,0.3);
+  border-top-color:#14532d; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:6px;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
 @keyframes fadeUp { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
 .fade-up { animation:fadeUp 0.7s ease both; }
 .d1{animation-delay:0.15s;}.d2{animation-delay:0.3s;}.d3{animation-delay:0.45s;}
-/* Floating Buttons */
-
-.whatsapp-float{
-position:fixed;
-bottom:20px;
-right:20px;
-width:60px;
-height:60px;
-background:#25D366;
-color:#fff;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
-z-index:999;
-transition:transform 0.2s;
-}
-
-.whatsapp-float:hover{
-transform:scale(1.1);
-}
-
-.call-float{
-position:fixed;
-bottom:90px;
-right:20px;
-width:60px;
-height:60px;
-background:#16a34a;
-color:#fff;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
-z-index:999;
-transition:transform 0.2s;
-}
-
-.call-float:hover{
-transform:scale(1.1);
-}
 </style>
 </head>
 <body>
+
+<!-- Toast Notification -->
+<div id="toast"></div>
 
 <!-- NAV -->
 <nav>
@@ -182,16 +185,12 @@ transform:scale(1.1);
   <div class="relative overflow-hidden" style="height:92vh;min-height:520px;">
     <div class="slider-track flex h-full" id="sliderTrack">
 
-      <!-- Slide 1: Residential Rooftop Solar — warm green overlay on bright photo -->
+      <!-- Slide 1 -->
       <div class="min-w-full h-full relative flex items-center" style="background:#0a1f0a;">
-        <!-- Full-bleed photo -->
         <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1600&q=80&auto=format&fit=crop"
           alt="Rooftop solar panels on a sunny day"
-          class="absolute inset-0 w-full h-full object-cover"
-          style="opacity:0.99;">
-        <!-- Gradient overlay: left reads clearly, right fades to photo -->
+          class="absolute inset-0 w-full h-full object-cover" style="opacity:0.99;">
         <div class="absolute inset-0" style="background:linear-gradient(100deg,rgba(10,40,10,0.82) 0%,rgba(10,40,10,0.55) 45%,rgba(10,40,10,0.18) 100%);"></div>
-        <!-- Content -->
         <div class="max-w-7xl mx-auto px-6 md:px-14 z-10 relative w-full">
           <div class="max-w-xl">
             <span class="mb-4 inline-block fade-up" style="font-size:0.72rem;letter-spacing:0.18em;font-weight:800;color:#86efac;text-transform:uppercase;background:rgba(22,163,74,0.25);padding:4px 14px;border-radius:20px;border:1px solid rgba(134,239,172,0.35);">Clean Energy • Future Forward</span>
@@ -205,33 +204,29 @@ transform:scale(1.1);
             </div>
           </div>
         </div>
-        <!-- Floating stat cards — right side -->
         <div class="absolute right-10 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-3">
-          <div style="background:linear-gradient(135deg,#facc15,#fde047);border-radius:18px;padding:20px 28px;box-shadow:0 10px 30px rgba(0,0,0,0.3);backdrop-filter:blur(4px);">
+          <div style="background:linear-gradient(135deg,#facc15,#fde047);border-radius:18px;padding:20px 28px;box-shadow:0 10px 30px rgba(0,0,0,0.3);">
             <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#14532d;">90%</div>
             <div style="font-size:0.8rem;color:#166534;font-weight:600;">Bill Reduction</div>
           </div>
-          <div style="background:rgba(255,255,255,0.92);border-radius:18px;padding:16px 24px;border:2px solid rgba(134,239,172,0.5);box-shadow:0 8px 25px rgba(0,0,0,0.2);backdrop-filter:blur(4px);">
+          <div style="background:rgba(255,255,255,0.92);border-radius:18px;padding:16px 24px;border:2px solid rgba(134,239,172,0.5);box-shadow:0 8px 25px rgba(0,0,0,0.2);">
             <div style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:#16a34a;">500+</div>
             <div style="font-size:0.8rem;color:#166534;font-weight:600;">Happy Clients</div>
           </div>
-          <div style="background:linear-gradient(135deg,rgba(22,163,74,0.9),rgba(34,197,94,0.9));border-radius:18px;padding:16px 24px;box-shadow:0 8px 25px rgba(0,0,0,0.25);backdrop-filter:blur(4px);">
+          <div style="background:linear-gradient(135deg,rgba(22,163,74,0.9),rgba(34,197,94,0.9));border-radius:18px;padding:16px 24px;box-shadow:0 8px 25px rgba(0,0,0,0.25);">
             <div style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;">25 Yr</div>
             <div style="font-size:0.8rem;color:#bbf7d0;font-weight:600;">Panel Warranty</div>
           </div>
         </div>
       </div>
 
-      <!-- Slide 2: Subsidy / Government — dramatic night/dusk solar photo -->
+      <!-- Slide 2 -->
       <div class="min-w-full h-full relative flex items-center" style="background:#081408;">
         <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80&auto=format&fit=crop"
           alt="Solar panels at sunset"
-          class="absolute inset-0 w-full h-full object-cover"
-          style="opacity:0.9;">
-        <!-- Centre-weighted dark overlay for text legibility -->
-<div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(5,20,5,0.35) 0%,rgba(5,20,5,0.5) 100%);"></div>
-<div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(5,20,5,0.15) 0%,rgba(5,20,5,0.35) 100%);"></div>
-        <!-- Content centred -->
+          class="absolute inset-0 w-full h-full object-cover" style="opacity:0.9;">
+        <div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(5,20,5,0.35) 0%,rgba(5,20,5,0.5) 100%);"></div>
+        <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(5,20,5,0.15) 0%,rgba(5,20,5,0.35) 100%);"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-14 z-10 relative text-center w-full">
           <span class="inline-block mb-4 fade-up" style="background:rgba(250,204,21,0.18);color:#fde047;font-size:0.72rem;letter-spacing:0.18em;font-weight:800;padding:4px 14px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(250,204,21,0.3);">PM Surya Ghar Scheme Available</span>
           <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-5 fade-up d1">Solar for Every<br><span style="color:#facc15;">Home & Business</span></h1>
@@ -240,7 +235,6 @@ transform:scale(1.1);
             <button class="btn-yellow px-10 py-3 text-base" onclick="showSection('scheme')">View Schemes</button>
             <button class="btn-outline-white px-8 py-3 text-base" onclick="showSection('contact')">Talk to Expert</button>
           </div>
-          <!-- Inline trust strip -->
           <div class="flex items-center justify-center gap-6 mt-10 fade-up d3">
             <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:10px 20px;text-align:center;">
               <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#facc15;">₹108K</div>
@@ -258,15 +252,12 @@ transform:scale(1.1);
         </div>
       </div>
 
-      <!-- Slide 3: Industrial / Commercial — wide solar field photo -->
+      <!-- Slide 3 -->
       <div class="min-w-full h-full relative flex items-center" style="background:#0d1f0d;">
         <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1600&q=80&auto=format&fit=crop"
           alt="Large solar farm with rows of panels"
-          class="absolute inset-0 w-full h-full object-cover"
-          style="opacity:0.9;">
-        <!-- Left-to-right overlay so text panel is readable -->
-      <div class="absolute inset-0" style="background:linear-gradient(95deg,rgba(8,25,8,0.55) 0%,rgba(8,25,8,0.3) 45%,rgba(8,25,8,0.05) 100%);"></div>
-        <!-- Content -->
+          class="absolute inset-0 w-full h-full object-cover" style="opacity:0.9;">
+        <div class="absolute inset-0" style="background:linear-gradient(95deg,rgba(8,25,8,0.55) 0%,rgba(8,25,8,0.3) 45%,rgba(8,25,8,0.05) 100%);"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-14 z-10 relative w-full">
           <div class="max-w-xl">
             <span class="mb-4 inline-block fade-up" style="font-size:0.72rem;letter-spacing:0.18em;font-weight:800;color:#86efac;text-transform:uppercase;background:rgba(22,163,74,0.25);padding:4px 14px;border-radius:20px;border:1px solid rgba(134,239,172,0.35);">Industrial & Commercial</span>
@@ -276,7 +267,6 @@ transform:scale(1.1);
               <button class="btn-green px-8 py-3 text-base" onclick="showSection('services')">Explore Solutions</button>
               <button class="btn-yellow px-8 py-3 text-base" onclick="showSection('contact')">Get Quote</button>
             </div>
-            <!-- Feature chips -->
             <div class="flex flex-wrap gap-2 mt-6 fade-up d3">
               <span style="background:rgba(255,255,255,0.12);backdrop-filter:blur(6px);color:#fff;font-size:0.75rem;font-weight:600;padding:5px 13px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);">⚡ SCADA Monitoring</span>
               <span style="background:rgba(255,255,255,0.12);backdrop-filter:blur(6px);color:#fff;font-size:0.75rem;font-weight:600;padding:5px 13px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);">📉 Accelerated Depreciation</span>
@@ -297,7 +287,7 @@ transform:scale(1.1);
     <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center font-bold text-xl" style="background:rgba(255,255,255,0.75);color:#14532d;box-shadow:0 4px 14px rgba(0,0,0,0.12);">&#8594;</button>
   </div>
 
-  <!-- STATS — all uniform white cards -->
+  <!-- STATS -->
   <div class="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div class="stat-card p-5 shadow-lg">
@@ -319,7 +309,7 @@ transform:scale(1.1);
     </div>
   </div>
 
-  <!-- WHY US — all uniform white cards -->
+  <!-- WHY US -->
   <div class="max-w-7xl mx-auto px-6 py-20">
     <div class="text-center mb-14">
       <span class="section-label mb-3 inline-block">Why Choose Us</span>
@@ -352,9 +342,8 @@ transform:scale(1.1);
       <div>
         <span class="section-label mb-3 inline-block">Our Story</span>
         <h2 class="text-4xl font-extrabold mt-3 mb-6" style="color:#14532d;">Powering India's<br><span style="color:#16a34a;">Solar Revolution</span></h2>
-        <p class="text-green-800 mb-4 leading-relaxed">Das solar Solutions was founded with a clear mission: to make clean, affordable solar energy accessible to every Indian home and business. With over 8 years in the renewable energy sector, we've become a trusted name across residential, commercial, and industrial solar installations.</p>
+        <p class="text-green-800 mb-4 leading-relaxed">Das Solar Solutions was founded with a clear mission: to make clean, affordable solar energy accessible to every Indian home and business. With over 8 years in the renewable energy sector, we've become a trusted name across residential, commercial, and industrial solar installations.</p>
         <p class="text-green-800 mb-8 leading-relaxed">Our team of certified engineers and technicians brings deep expertise in system design, installation, and long-term maintenance — ensuring your solar investment delivers returns for decades.</p>
-        <!-- Uniform stat boxes -->
         <div class="grid grid-cols-2 gap-4">
           <div class="rounded-xl p-5 text-center bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 16px rgba(22,163,74,0.08);">
             <div class="text-2xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">₹2 Cr+</div>
@@ -370,7 +359,7 @@ transform:scale(1.1);
         <div class="rounded-3xl overflow-hidden flex items-center justify-center" style="background:linear-gradient(135deg,#14532d,#166534);height:420px;">
           <div class="text-center text-white p-8">
             <div class="text-8xl mb-4">☀️</div>
-            <h3 class="text-2xl font-bold mb-2">Das solar Solutions</h3>
+            <h3 class="text-2xl font-bold mb-2">Das Solar Solutions</h3>
             <p style="color:#86efac;">Since 2016 · Solar Excellence</p>
             <div class="mt-5 flex gap-3 justify-center">
               <span class="badge-yellow">MNRE Certified</span>
@@ -384,7 +373,6 @@ transform:scale(1.1);
         </div>
       </div>
     </div>
-    <!-- Team — all uniform white cards -->
     <div class="mt-20">
       <div class="text-center mb-10">
         <span class="section-label mb-3 inline-block">Our Team</span>
@@ -422,44 +410,37 @@ transform:scale(1.1);
       <h2 class="text-4xl font-extrabold mt-3" style="color:#14532d;">Our Solar <span style="color:#16a34a;">Services</span></h2>
       <p class="text-green-700 mt-3 max-w-xl mx-auto">End-to-end solar solutions from consultation to installation and beyond.</p>
     </div>
-    <!-- All 6 service cards are now uniform white -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-      <!-- Card 1 -->
       <div class="service-card p-6">
         <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
         <div class="flex items-center gap-2 mb-2"><h3 class="font-bold text-lg" style="color:#14532d;">Rooftop Solar</h3><span class="badge-green">Popular</span></div>
         <p class="text-green-700 text-sm leading-relaxed">On-grid and off-grid rooftop solar systems for homes, apartments, and small businesses. Net metering enabled.</p>
         <button class="btn-yellow w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
       </div>
-      <!-- Card 2 -->
       <div class="service-card p-6">
         <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg></div>
         <h3 class="font-bold text-lg mb-2" style="color:#14532d;">Commercial Solar</h3>
         <p class="text-green-700 text-sm leading-relaxed">Large-scale rooftop and ground-mounted systems for offices, hotels, malls, and industrial units.</p>
         <button class="btn-outline-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
       </div>
-      <!-- Card 3 — was yellow, now uniform white -->
       <div class="service-card p-6">
         <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
         <div class="flex items-center gap-2 mb-2"><h3 class="font-bold text-lg" style="color:#14532d;">Solar Water Pump</h3><span class="badge-yellow">New</span></div>
         <p class="text-green-700 text-sm leading-relaxed">DC and AC solar pumping systems for agriculture, irrigation, and drinking water — zero electricity bills.</p>
         <button class="btn-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
       </div>
-      <!-- Card 4 -->
       <div class="service-card p-6">
         <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
         <h3 class="font-bold text-lg mb-2" style="color:#14532d;">O&amp;M Services</h3>
         <p class="text-green-700 text-sm leading-relaxed">Annual maintenance contracts for cleaning, monitoring, and servicing your solar plant for peak performance.</p>
         <button class="btn-outline-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
       </div>
-      <!-- Card 5 -->
       <div class="service-card p-6">
         <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="1" y="6" width="22" height="13" rx="2"/><path d="M5 6V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></svg></div>
         <h3 class="font-bold text-lg mb-2" style="color:#14532d;">Solar Street Lights</h3>
         <p class="text-green-700 text-sm leading-relaxed">All-in-one and split solar street lighting for municipalities, housing societies, and rural areas.</p>
         <button class="btn-yellow w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
       </div>
-      <!-- Card 6 — was light green bg, now uniform white -->
       <div class="service-card p-6">
         <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
         <h3 class="font-bold text-lg mb-2" style="color:#14532d;">Solar Consultation</h3>
@@ -467,13 +448,12 @@ transform:scale(1.1);
         <button class="btn-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Book Free →</button>
       </div>
     </div>
-    <!-- YouTube -->
     <div class="rounded-3xl overflow-hidden shadow-2xl" style="border:4px solid #dcfce7;">
       <div class="flex items-center gap-3 px-6 py-4" style="background:linear-gradient(90deg,#14532d,#166534);">
         <div class="w-3 h-3 rounded-full" style="background:#facc15;"></div>
         <div class="w-3 h-3 rounded-full" style="background:#86efac;"></div>
         <div class="w-3 h-3 rounded-full" style="background:#22c55e;"></div>
-        <span class="text-green-200 text-sm ml-4">▶ How Solar Power Works — Das solar Solutions</span>
+        <span class="text-green-200 text-sm ml-4">▶ How Solar Power Works — Das Solar Solutions</span>
       </div>
       <div class="relative" style="padding-bottom:56.25%;background:#0f1f0f;">
         <iframe class="absolute inset-0 w-full h-full"
@@ -494,7 +474,6 @@ transform:scale(1.1);
       <h2 class="text-4xl font-extrabold mt-3" style="color:#14532d;">Solar <span style="color:#16a34a;">Packages & Subsidies</span></h2>
       <p class="text-green-700 mt-3 max-w-xl mx-auto">Avail up to 40% central government subsidy under PM Surya Ghar Muft Bijli Yojana.</p>
     </div>
-    <!-- Govt Banner -->
     <div class="rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-center gap-6" style="background:linear-gradient(135deg,#14532d,#166534);border:2px solid #22c55e;">
       <div class="text-4xl">🏛️</div>
       <div class="flex-1 text-white">
@@ -503,10 +482,7 @@ transform:scale(1.1);
       </div>
       <button class="btn-yellow px-7 py-2 text-sm whitespace-nowrap" onclick="showSection('contact')">Apply Now →</button>
     </div>
-
-    <!-- Pricing — all uniform white scheme cards with consistent green header -->
     <div class="grid md:grid-cols-3 gap-6">
-      <!-- Starter -->
       <div class="scheme-card bg-white">
         <div class="p-6" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-bottom:2px solid #bbf7d0;">
           <p class="text-xs font-bold uppercase tracking-widest text-green-500 mb-2">Starter</p>
@@ -526,8 +502,6 @@ transform:scale(1.1);
           <button class="btn-outline-green w-full mt-6 py-3 text-sm" onclick="showSection('contact')">Get Quote</button>
         </div>
       </div>
-
-      <!-- Popular — keeps its special border but header is now consistent green-pale like others -->
       <div class="scheme-card scheme-popular bg-white">
         <div class="p-6" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-bottom:2px solid #16a34a;">
           <div class="flex items-center justify-between mb-2">
@@ -551,8 +525,6 @@ transform:scale(1.1);
           <button class="btn-green w-full mt-6 py-3 text-sm" onclick="showSection('contact')">Get Quote</button>
         </div>
       </div>
-
-      <!-- Enterprise — keeps dark header as it's a distinct tier, not alternating color -->
       <div class="scheme-card bg-white">
         <div class="p-6" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-bottom:2px solid #bbf7d0;">
           <p class="text-xs font-bold uppercase tracking-widest text-green-500 mb-2">Enterprise</p>
@@ -573,8 +545,6 @@ transform:scale(1.1);
         </div>
       </div>
     </div>
-
-    <!-- Loan Banner — uniform style -->
     <div class="mt-10 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 20px rgba(22,163,74,0.07);">
       <div class="text-4xl">🏦</div>
       <div class="flex-1">
@@ -597,7 +567,6 @@ transform:scale(1.1);
     <div class="grid md:grid-cols-2 gap-12">
       <div>
         <h3 class="text-xl font-bold mb-6" style="color:#14532d;">Reach Us Directly</h3>
-        <!-- All contact info cards — uniform pale green style -->
         <div class="space-y-4">
           <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;">
             <div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.41 2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div>
@@ -609,7 +578,7 @@ transform:scale(1.1);
           </div>
           <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;">
             <div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div><div class="font-semibold text-sm" style="color:#14532d;">Address</div><div class="text-green-700 text-sm">Z3V-16/P-03(NH-133),Kurshi Road, Gudamba,<br>Near Sai Enclave and SR Lawn,<br>Lucknow(Uttar Pradesh), India</div></div>
+            <div><div class="font-semibold text-sm" style="color:#14532d;">Address</div><div class="text-green-700 text-sm">Z3V-16/P-03(NH-133), Kurshi Road, Gudamba,<br>Near Sai Enclave and SR Lawn,<br>Lucknow (Uttar Pradesh), India</div></div>
           </div>
           <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;">
             <div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
@@ -617,67 +586,48 @@ transform:scale(1.1);
           </div>
         </div>
       </div>
-      <!-- Form -->
+
+      <!-- ✅ CONTACT FORM WITH EMAILJS -->
       <div class="rounded-3xl p-8 shadow-xl" style="background:#fff;border:2px solid #dcfce7;">
         <h3 class="text-xl font-bold mb-6" style="color:#14532d;">Send Us a Message</h3>
         <div id="contactForm">
-<form action="https://formsubmit.co/dasenterprises3152@gmail.com" method="POST">
-
-<input type="hidden" name="_subject" value="New Solar Inquiry From Website">
-<input type="hidden" name="_captcha" value="false">
-
-<div class="grid md:grid-cols-2 gap-4 mb-4">
-
-<div>
-<label class="block text-sm font-semibold text-green-800 mb-1">Full Name *</label>
-<input type="text" name="name" class="form-input" placeholder="Your full name" required>
-</div>
-
-<div>
-<label class="block text-sm font-semibold text-green-800 mb-1">Email *</label>
-<input type="email" name="email" class="form-input" placeholder="your@email.com" required>
-</div>
-
-</div>
-
-<div class="grid md:grid-cols-2 gap-4 mb-4">
-
-<div>
-<label class="block text-sm font-semibold text-green-800 mb-1">Mobile Number *</label>
-<input type="tel" name="mobile" class="form-input" placeholder="+91 XXXXX XXXXX" required>
-</div>
-
-<div>
-<label class="block text-sm font-semibold text-green-800 mb-1">Service Needed</label>
-
-<select name="service" class="form-input">
-<option>Rooftop Solar</option>
-<option>Commercial Solar</option>
-<option>Solar Water Pump</option>
-<option>Solar Street Lights</option>
-<option>O&M Services</option>
-<option>Consultation</option>
-</select>
-
-</div>
-
-</div>
-
-<div class="mb-4">
-<label class="block text-sm font-semibold text-green-800 mb-1">Full Address</label>
-<input type="text" name="address" class="form-input" placeholder="Installation address">
-</div>
-
-<div class="mb-6">
-<label class="block text-sm font-semibold text-green-800 mb-1">Message</label>
-<textarea name="message" class="form-input"></textarea>
-</div>
-
-<button type="submit" class="btn-yellow w-full py-3 text-base">
-Send Message 🚀
-</button>
-
-</form>
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm font-semibold text-green-800 mb-1">Full Name *</label>
+              <input type="text" id="fname" class="form-input" placeholder="Your full name">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-green-800 mb-1">Email Address *</label>
+              <input type="email" id="femail" class="form-input" placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-sm font-semibold text-green-800 mb-1">Mobile Number *</label>
+              <input type="tel" id="fmobile" class="form-input" placeholder="+91 XXXXX XXXXX">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-green-800 mb-1">Service Needed</label>
+              <select id="fservice" class="form-input">
+                <option>Select service</option>
+                <option>Rooftop Solar</option>
+                <option>Commercial Solar</option>
+                <option>Solar Water Pump</option>
+                <option>Solar Street Lights</option>
+                <option>O&amp;M Services</option>
+                <option>Consultation</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-semibold text-green-800 mb-1">Full Address</label>
+            <input type="text" id="faddress" class="form-input" placeholder="Installation address / site location">
+          </div>
+          <div class="mb-6">
+            <label class="block text-sm font-semibold text-green-800 mb-1">Message</label>
+            <textarea id="fmessage" class="form-input" placeholder="Tell us about your requirement, existing electricity bill, roof size, etc."></textarea>
+          </div>
+          <button class="btn-yellow w-full py-3 text-base" id="submitBtn" onclick="submitForm()">Send Message 🚀</button>
         </div>
         <div id="formSuccess" class="hidden text-center py-10">
           <div class="text-5xl mb-4">🎉</div>
@@ -699,7 +649,7 @@ Send Message 🚀
           <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#facc15,#22c55e);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" fill="#14532d"/><line x1="12" y1="2" x2="12" y2="5.5" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="18.5" x2="12" y2="22" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="12" x2="5.5" y2="12" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="18.5" y1="12" x2="22" y2="12" stroke="#14532d" stroke-width="2" stroke-linecap="round"/></svg>
           </div>
-          <span style="font-family:'Syne',sans-serif;font-weight:800;color:#fff;">Das <span style="color:#facc15;">Interprises</span></span>
+          <span style="font-family:'Syne',sans-serif;font-weight:800;color:#fff;">Das <span style="color:#facc15;">Solar Solutions</span></span>
         </div>
         <p class="text-sm leading-relaxed max-w-sm">India's trusted solar energy company. Empowering homes and businesses with clean, affordable solar power since 2016.</p>
         <div class="flex gap-2 mt-4">
@@ -722,63 +672,107 @@ Send Message 🚀
         <ul class="space-y-2 text-sm">
           <li>📞 +91 9125835900</li>
           <li>✉️ dasenterprises3152@gmail.com</li>
-          <li class="leading-relaxed">📍 Z3V-16/P-03(NH-133),Kurshi Road, Gudamba, Near Sai Enclave and SR Lawn,<br>Lucknow(Uttar Pradesh), India</li>
+          <li class="leading-relaxed">📍 Z3V-16/P-03(NH-133), Kurshi Road, Gudamba,<br>Near Sai Enclave and SR Lawn,<br>Lucknow (UP), India</li>
         </ul>
       </div>
     </div>
     <div class="pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-sm">
-      <div>© 2024 Das solar Solutions. All rights reserved.</div>
+      <div>© 2024 Das Solar Solutions. All rights reserved.</div>
       <div>Empowering India with Solar ☀️🌿</div>
     </div>
   </div>
 </footer>
-<!-- Call Button -->
-<a href="tel:+919125835900" class="call-float">
-📞
-</a>
-
-<!-- WhatsApp Button -->
-<a href="https://wa.me/919125835900" target="_blank" class="whatsapp-float">
-💬
-</a>
 
 <script>
-const sections=['home','about','services','scheme','contact'];
-function showSection(id){
-  sections.forEach(s=>{
-    document.getElementById(s).classList.toggle('section-hidden',s!==id);
-    const n=document.getElementById('nav-'+s);
-    if(n) n.classList.toggle('active',s===id);
+// ─── SECTION NAVIGATION ──────────────────────────────────────────────────────
+const sections = ['home','about','services','scheme','contact'];
+function showSection(id) {
+  sections.forEach(s => {
+    document.getElementById(s).classList.toggle('section-hidden', s !== id);
+    const n = document.getElementById('nav-' + s);
+    if (n) n.classList.toggle('active', s === id);
   });
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function toggleMobile(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
 
-let cur=0,timer;
-function goSlide(n){
-  cur=n;
-  document.getElementById('sliderTrack').style.transform=`translateX(-${n*100}%)`;
-  document.querySelectorAll('.dot').forEach((d,i)=>d.className='dot'+(i===n?' active':''));
-  clearInterval(timer); timer=setInterval(next,5000);
+// ─── SLIDER ───────────────────────────────────────────────────────────────────
+let cur = 0, timer;
+function goSlide(n) {
+  cur = n;
+  document.getElementById('sliderTrack').style.transform = `translateX(-${n * 100}%)`;
+  document.querySelectorAll('.dot').forEach((d, i) => d.className = 'dot' + (i === n ? ' active' : ''));
+  clearInterval(timer);
+  timer = setInterval(next, 5000);
 }
-function next(){ goSlide((cur+1)%3); }
-function prevSlide(){ goSlide((cur+2)%3); }
-function nextSlide(){ next(); }
-timer=setInterval(next,5000);
+function next() { goSlide((cur + 1) % 3); }
+function prevSlide() { goSlide((cur + 2) % 3); }
+function nextSlide() { next(); }
+timer = setInterval(next, 5000);
 
-function submitForm(){
-  const n=document.getElementById('fname').value.trim();
-  const e=document.getElementById('femail').value.trim();
-  const m=document.getElementById('fmobile').value.trim();
-  if(!n||!e||!m){ alert('Please fill in Name, Email, and Mobile.'); return; }
-  document.getElementById('contactForm').classList.add('hidden');
-  document.getElementById('formSuccess').classList.remove('hidden');
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `show ${type}`;
+  setTimeout(() => { t.className = type; }, 4000);
 }
-function resetForm(){
-  ['fname','femail','fmobile','faddress','fmessage'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fservice').selectedIndex=0;
-  document.getElementById('contactForm').classList.remove('hidden');
-  document.getElementById('formSuccess').classList.add('hidden');
+
+// ─── CONTACT FORM WITH EMAILJS ────────────────────────────────────────────────
+async function submitForm() {
+  const name    = document.getElementById('fname').value.trim();
+  const email   = document.getElementById('femail').value.trim();
+  const phone   = document.getElementById('fmobile').value.trim();
+  const service = document.getElementById('fservice').value;
+  const address = document.getElementById('faddress').value;
+  const message = document.getElementById('fmessage').value;
+
+  if (!name || !email || !phone) {
+    showToast("Please fill required fields", "error");
+    return;
+  }
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spinner"></span> Sending...`;
+
+  try {
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: name,
+        from_email: email,
+        phone: phone,
+        service: service,
+        address: address,
+        message: message
+      }
+    );
+
+    showToast("Message sent successfully!");
+    document.getElementById("contactForm").classList.add("hidden");
+    document.getElementById("formSuccess").classList.remove("hidden");
+
+  } catch (error) {
+    console.error(error);
+    showToast("Failed to send message", "error");
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = "Send Message 🚀";
+}
+
+function resetForm() {
+  document.getElementById("contactForm").classList.remove("hidden");
+  document.getElementById("formSuccess").classList.add("hidden");
+
+  document.getElementById('fname').value = "";
+  document.getElementById('femail').value = "";
+  document.getElementById('fmobile').value = "";
+  document.getElementById('fservice').value = "Select service";
+  document.getElementById('faddress').value = "";
+  document.getElementById('fmessage').value = "";
 }
 </script>
 </body>
