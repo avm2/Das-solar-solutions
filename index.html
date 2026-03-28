@@ -7,31 +7,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- ✅ EmailJS SDK — sends email directly from browser, no server needed -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  // ──────────────────────────────────────────────────────────────────
-  //  EMAILJS SETUP — Follow these 5 steps to activate email delivery:
-  //
-  //  STEP 1: Go to https://www.emailjs.com and create a FREE account
-  //  STEP 2: Add an Email Service (Gmail recommended) → copy SERVICE ID
-  //  STEP 3: Create an Email Template → copy TEMPLATE ID
-  //           In the template body use these variables:
-  //             {{from_name}}   — sender's name
-  //             {{from_email}}  — sender's email
-  //             {{phone}}       — phone number
-  //             {{service}}     — service selected
-  //             {{address}}     — installation address
-  //             {{message}}     — message text
-  //             {{to_email}}    — your receiving email
-  //  STEP 4: Go to Account → copy your PUBLIC KEY
-  //  STEP 5: Replace the three placeholder values below:
-  // ──────────────────────────────────────────────────────────────────
-  const EMAILJS_SERVICE_ID  = 'service_q907ut2';   // e.g. 'service_abc123'
-  const EMAILJS_TEMPLATE_ID = 'template_7ygv7rk';  // e.g. 'template_xyz789'
-  const EMAILJS_PUBLIC_KEY  = 'zcfuIGJjNq9Kuxjl4';   // e.g. 'abc123XYZ'
-
+  const EMAILJS_SERVICE_ID  = 'service_q907ut2';
+  const EMAILJS_TEMPLATE_ID = 'template_7ygv7rk';
+  const EMAILJS_PUBLIC_KEY  = 'zcfuIGJjNq9Kuxjl4';
   emailjs.init(EMAILJS_PUBLIC_KEY);
 </script>
 
@@ -41,21 +21,12 @@ body { font-family:'DM Sans',sans-serif; background:#f0fdf4; color:#1a2e1a; over
 h1,h2,h3,h4,h5 { font-family:'Syne',sans-serif; }
 
 :root {
-  --green:      #16a34a;
-  --green-dark: #14532d;
-  --green-mid:  #22c55e;
-  --green-lite: #86efac;
-  --green-pale: #dcfce7;
-  --yellow:     #facc15;
-  --yellow-mid: #fde047;
-  --yellow-pale:#fefce8;
+  --green:#16a34a; --green-dark:#14532d; --green-mid:#22c55e;
+  --green-lite:#86efac; --green-pale:#dcfce7;
+  --yellow:#facc15; --yellow-mid:#fde047; --yellow-pale:#fefce8;
 }
 
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  background:linear-gradient(90deg,#14532d 0%,#166534 60%,#15803d 100%);
-  box-shadow:0 2px 20px rgba(20,83,45,0.3);
-}
+nav { position:fixed; top:0; left:0; right:0; z-index:100; background:linear-gradient(90deg,#14532d 0%,#166534 60%,#15803d 100%); box-shadow:0 2px 20px rgba(20,83,45,0.3); }
 .nav-link { color:rgba(255,255,255,0.8); font-size:0.88rem; letter-spacing:0.04em; font-weight:500; cursor:pointer; transition:all 0.2s; padding:6px 15px; border-radius:8px; }
 .nav-link:hover { color:#fff; background:rgba(255,255,255,0.12); }
 .nav-link.active { color:#facc15; font-weight:700; }
@@ -63,13 +34,10 @@ nav {
 .btn-yellow { background:linear-gradient(135deg,#facc15,#fde047); color:#14532d; font-family:'Syne',sans-serif; font-weight:800; border:none; cursor:pointer; border-radius:10px; transition:transform 0.15s,box-shadow 0.15s; box-shadow:0 4px 15px rgba(250,204,21,0.4); }
 .btn-yellow:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(250,204,21,0.5); }
 .btn-yellow:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
-
 .btn-green { background:linear-gradient(135deg,#16a34a,#22c55e); color:#fff; font-family:'Syne',sans-serif; font-weight:700; border:none; cursor:pointer; border-radius:10px; transition:transform 0.15s,box-shadow 0.15s; box-shadow:0 4px 15px rgba(22,163,74,0.35); }
 .btn-green:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(22,163,74,0.45); }
-
 .btn-outline-white { background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.6); font-family:'Syne',sans-serif; font-weight:600; cursor:pointer; border-radius:10px; transition:all 0.2s; }
 .btn-outline-white:hover { background:rgba(255,255,255,0.15); border-color:#fff; }
-
 .btn-outline-green { background:transparent; color:#16a34a; border:2px solid #16a34a; font-family:'Syne',sans-serif; font-weight:600; cursor:pointer; border-radius:10px; transition:all 0.2s; }
 .btn-outline-green:hover { background:#16a34a; color:#fff; }
 
@@ -79,9 +47,103 @@ section { scroll-margin-top:72px; }
 
 .slider-track { transition:transform 0.7s cubic-bezier(0.77,0,0.18,1); }
 
+/* ── PHOTO SERVICE CARDS ─────────────────────────────────────── */
+.svc-photo-card {
+  position:relative; border-radius:18px; overflow:hidden;
+  height:300px; cursor:pointer;
+  box-shadow:0 8px 30px rgba(0,0,0,0.18);
+  transition:transform 0.25s, box-shadow 0.25s;
+  flex-shrink:0;
+}
+.svc-photo-card:hover { transform:translateY(-6px); box-shadow:0 18px 50px rgba(0,0,0,0.28); }
+.svc-photo-card img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
+.svc-photo-card:hover img { transform:scale(1.06); }
+.svc-photo-card .card-label {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(10,30,10,0.72);
+  backdrop-filter:blur(8px);
+  padding:16px 20px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  transition: padding 0.3s ease;
+}
+.svc-photo-card .card-label h3 { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:800; color:#fff; margin-bottom:4px; }
+.svc-photo-card .card-label p {
+  font-size: 0.7rem; /* smaller for mobile */
+  color: rgba(255,255,255,0.75);
+  line-height: 1.4;
+}
+
+@media (min-width: 640px) {
+  .svc-photo-card .card-label p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .svc-photo-card .card-label p {
+    font-size: 0.78rem; /* original size for desktop */
+  }
+}
+.svc-photo-card .card-badge {
+  position:absolute; top:14px; left:14px;
+  font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:20px;
+}
+
+/* ── HOVER GET QUOTE BUTTON ──────────────────────────────────── */
+.svc-photo-card .hover-quote-btn {
+  position: absolute;
+  bottom: -56px;
+  left: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #facc15, #fde047);
+  color: #14532d;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 0;
+  cursor: pointer;
+  text-align: center;
+  transition: bottom 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s, transform 0.15s;
+  box-shadow: 0 4px 20px rgba(250,204,21,0.5);
+  z-index: 10;
+  letter-spacing: 0.02em;
+}
+.svc-photo-card:hover .hover-quote-btn {
+  bottom: 12px;
+}
+.svc-photo-card .hover-quote-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 30px rgba(250,204,21,0.7);
+}
+.svc-photo-card:hover .card-label {
+  padding-bottom: 56px;
+}
+
+/* ── HOME SERVICES SLIDER ────────────────────────────────────── */
+.home-svc-outer { overflow:hidden; position:relative; }
+.home-svc-track { display:flex; gap:20px; transition:transform 0.55s cubic-bezier(0.77,0,0.18,1); }
+.home-svc-track .svc-photo-card {
+  width: calc(33.333% - 14px);
+  min-width: 260px;
+}
+
+@media (max-width: 768px) {
+  .home-svc-track .svc-photo-card {
+    width: 85%;
+    min-width: 85%;
+  }
+}
+
+/* ── SERVICES PAGE SLIDER ────────────────────────────────────── */
+.svc-page-outer { overflow: hidden; position: relative; }
+.svc-page-track { display: flex; gap: 24px; transition: transform 0.6s cubic-bezier(0.77,0,0.18,1); }
+.svc-page-track .svc-photo-card { width: calc(33.333% - 16px); min-width: 280px; height: 340px; flex-shrink: 0; }
+
+/* Old text service cards (kept for fallback) */
 .service-card { background:#fff; border:2px solid #dcfce7; border-radius:20px; transition:all 0.25s; }
 .service-card:hover { border-color:#86efac; box-shadow:0 20px 50px rgba(22,163,74,0.12); transform:translateY(-6px); }
-
 .icon-box { width:56px; height:56px; border-radius:14px; background:linear-gradient(135deg,#dcfce7,#bbf7d0); display:flex; align-items:center; justify-content:center; }
 
 .scheme-card { border-radius:22px; overflow:hidden; border:2px solid #dcfce7; transition:all 0.25s; }
@@ -96,62 +158,201 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
 
 .dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.45); cursor:pointer; transition:all 0.3s; }
 .dot.active { background:#facc15; width:24px; border-radius:4px; }
+.dot-dark { width:8px; height:8px; border-radius:50%; background:#bbf7d0; cursor:pointer; transition:all 0.3s; }
+.dot-dark.active { background:#16a34a; width:24px; border-radius:4px; }
 
 #mobileMenu { display:none; background:linear-gradient(180deg,#14532d,#166534); }
 #mobileMenu.open { display:flex; }
-
-.stat-card { background:#fff; border-radius:18px; border:2px solid #dcfce7; text-align:center; }
-
+.stat-card { background:#fff; border-radius:18px; border:2px solid #dcfce7; text-align:center;   transition: transform 0.2s ease;}
+.stat-card:hover {
+  transform: translateY(-4px);
+}
 .badge-yellow { background:#facc15; color:#14532d; font-size:0.68rem; font-weight:800; padding:3px 10px; border-radius:20px; display:inline-block; }
 .badge-green  { background:#22c55e; color:#fff; font-size:0.68rem; font-weight:800; padding:3px 10px; border-radius:20px; display:inline-block; }
 
-.glow { position:absolute; border-radius:50%; pointer-events:none; }
-
-/* Toast notification */
-#toast {
-  position:fixed; bottom:24px; right:24px; z-index:9999;
-  padding:14px 22px; border-radius:14px; font-family:'Syne',sans-serif; font-weight:700; font-size:0.9rem;
-  box-shadow:0 8px 30px rgba(0,0,0,0.18); transform:translateY(80px); opacity:0;
-  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none;
-}
+#toast { position:fixed; bottom:24px; right:24px; z-index:9999; padding:14px 22px; border-radius:14px; font-family:'Syne',sans-serif; font-weight:700; font-size:0.9rem; box-shadow:0 8px 30px rgba(0,0,0,0.18); transform:translateY(80px); opacity:0; transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); pointer-events:none; }
 #toast.show { transform:translateY(0); opacity:1; }
 #toast.success { background:linear-gradient(135deg,#16a34a,#22c55e); color:#fff; }
 #toast.error   { background:linear-gradient(135deg,#dc2626,#ef4444); color:#fff; }
 
-/* Loading spinner inside button */
-.spinner {
-  display:inline-block; width:16px; height:16px; border:2.5px solid rgba(20,83,45,0.3);
-  border-top-color:#14532d; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:6px;
-}
+.spinner { display:inline-block; width:16px; height:16px; border:2.5px solid rgba(20,83,45,0.3); border-top-color:#14532d; border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle; margin-right:6px; }
 @keyframes spin { to { transform:rotate(360deg); } }
-
 @keyframes fadeUp { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
 .fade-up { animation:fadeUp 0.7s ease both; }
 .d1{animation-delay:0.15s;}.d2{animation-delay:0.3s;}.d3{animation-delay:0.45s;}
+
+/* Slider arrow btn */
+.arrow-btn { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:none; font-size:1.1rem; font-weight:bold; flex-shrink:0; transition:all 0.2s; }
+.arrow-btn-light { background:rgba(255,255,255,0.85); color:#14532d; box-shadow:0 4px 14px rgba(0,0,0,0.15); }
+.arrow-btn-light:hover { background:#fff; box-shadow:0 6px 20px rgba(0,0,0,0.22); }
+.arrow-btn-dark { background:#fff; color:#14532d; border:2px solid #dcfce7; box-shadow:0 4px 14px rgba(22,163,74,0.1); }
+.arrow-btn-dark:hover { background:#f0fdf4; border-color:#86efac; }
+
+/* ── SERVICES PAGE PROGRESS BAR ──────────────────────────────── */
+.svc-progress-bar {
+  height: 3px;
+  background: #dcfce7;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+.svc-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .svc-photo-card .hover-quote-btn {
+    bottom: 12px;
+    opacity: 1;
+  }
+
+  .svc-photo-card .card-label {
+    padding-bottom: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+}
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  
+  width: 38px;
+  height: 38px;
+  
+  background: rgba(255,255,255,0.25); /* transparent */
+  color: #14532d;
+  
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.3);
+  
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: bold;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.hero-arrow:hover {
+  background: rgba(255,255,255,0.45);
+  transform: translateY(-50%) scale(1.08);
+}
+/* Common arrow */
+.slider-arrow {
+  width: 42px;
+  height: 42px;
+  background: #f1f5f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #14532d;
+  transition: all 0.25s ease;
+}
+
+.slider-arrow:hover {
+  background: #e2e8f0;
+  transform: scale(1.05);
+}
+
+/* Desktop arrows */
+.desktop-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+}
+
+
+.left-arrow {
+  left: 3px;
+}
+
+.right-arrow {
+  right: 3px;
+}
+.stat-top-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Value */
+.stat-value {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #facc15; /* yellow */
+}
+
+/* Label */
+.stat-label {
+  font-size: 0.65rem;
+  margin-top: 4px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.2;
+}
+
+/* Desktop scaling */
+@media (min-width: 768px) {
+  .stat-top-card {
+    padding: 14px;
+  }
+  .stat-value {
+    font-size: 1.4rem;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .hero-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+}
+@media (max-width: 768px) {
+  .arrow-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 0.9rem;
+  }
+}
 </style>
 </head>
 <body>
-
-<!-- Toast Notification -->
 <div id="toast"></div>
 
 <!-- NAV -->
 <nav>
   <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
     <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('home')">
-      <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#facc15,#22c55e);">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="4.5" fill="#14532d"/>
-          <line x1="12" y1="2" x2="12" y2="5.5" stroke="#14532d" stroke-width="2.2" stroke-linecap="round"/>
-          <line x1="12" y1="18.5" x2="12" y2="22" stroke="#14532d" stroke-width="2.2" stroke-linecap="round"/>
-          <line x1="2" y1="12" x2="5.5" y2="12" stroke="#14532d" stroke-width="2.2" stroke-linecap="round"/>
-          <line x1="18.5" y1="12" x2="22" y2="12" stroke="#14532d" stroke-width="2.2" stroke-linecap="round"/>
-          <line x1="4.93" y1="4.93" x2="7.17" y2="7.17" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
-          <line x1="16.83" y1="16.83" x2="19.07" y2="19.07" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
-          <line x1="4.93" y1="19.07" x2="7.17" y2="16.83" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
-          <line x1="16.83" y1="7.17" x2="19.07" y2="4.93" stroke="#14532d" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
+        <img 
+    src="./assets/RMOVE LOGO.png" 
+    alt="Das Solar Logo"
+    class="h-12 w-auto object-contain"
+  />
       <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.18rem;color:#fff;">Das <span style="color:#facc15;">Solar Solutions</span></span>
     </div>
     <div class="hidden md:flex items-center gap-1">
@@ -184,23 +385,18 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
   <!-- HERO SLIDER -->
   <div class="relative overflow-hidden" style="height:92vh;min-height:520px;">
     <div class="slider-track flex h-full" id="sliderTrack">
-
       <!-- Slide 1 -->
       <div class="min-w-full h-full relative flex items-center" style="background:#0a1f0a;">
-        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1600&q=80&auto=format&fit=crop"
-          alt="Rooftop solar panels on a sunny day"
-          class="absolute inset-0 w-full h-full object-cover" style="opacity:0.99;">
+        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1600&q=80&auto=format&fit=crop" alt="Rooftop solar" class="absolute inset-0 w-full h-full object-cover" style="opacity:0.99;">
         <div class="absolute inset-0" style="background:linear-gradient(100deg,rgba(10,40,10,0.82) 0%,rgba(10,40,10,0.55) 45%,rgba(10,40,10,0.18) 100%);"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-14 z-10 relative w-full">
           <div class="max-w-xl">
             <span class="mb-4 inline-block fade-up" style="font-size:0.72rem;letter-spacing:0.18em;font-weight:800;color:#86efac;text-transform:uppercase;background:rgba(22,163,74,0.25);padding:4px 14px;border-radius:20px;border:1px solid rgba(134,239,172,0.35);">Clean Energy • Future Forward</span>
-            <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-5 fade-up d1 text-white">
-              Harness the<br><span style="color:#facc15;">Power of Sun ☀️</span>
-            </h1>
-            <p class="text-green-100 text-lg max-w-lg mb-8 fade-up d2" style="text-shadow:0 1px 8px rgba(0,0,0,0.4);">India's trusted solar partner for homes, businesses and industries. Cut your electricity bills by up to <strong>90%</strong>.</p>
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight mb-5 fade-up d1 text-white">Harness the<br><span style="color:#facc15;">Power of Sun ☀️</span></h1>
+            <p class="text-green-100 text-sm sm:text-base md:text-lg max-w-lg mb-6 sm:mb-8 fade-up d2" style="text-shadow:0 1px 8px rgba(0,0,0,0.4);">India's trusted solar partner. Cut your electricity bills by up to <strong>90%</strong>.</p>
             <div class="flex gap-4 flex-wrap fade-up d3">
-              <button class="btn-yellow px-8 py-3 text-base" onclick="showSection('contact')">Get Free Quote</button>
-              <button class="btn-outline-white px-8 py-3 text-base" onclick="showSection('services')">Our Services →</button>
+              <button class="btn-yellow px-6 py-2 text-sm sm:px-8 sm:py-3 sm:text-base" onclick="showSection('contact')">Get Free Quote</button>
+              <button class="btn-outline-white px-6 py-2 text-sm sm:px-8 sm:py-3 sm:text-base" onclick="showSection('services')">Our Services →</button>
             </div>
           </div>
         </div>
@@ -219,53 +415,51 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
           </div>
         </div>
       </div>
-
       <!-- Slide 2 -->
       <div class="min-w-full h-full relative flex items-center" style="background:#081408;">
-        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80&auto=format&fit=crop"
-          alt="Solar panels at sunset"
-          class="absolute inset-0 w-full h-full object-cover" style="opacity:0.9;">
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80&auto=format&fit=crop" alt="Solar sunset" class="absolute inset-0 w-full h-full object-cover" style="opacity:0.9;">
         <div class="absolute inset-0" style="background:radial-gradient(ellipse at center,rgba(5,20,5,0.35) 0%,rgba(5,20,5,0.5) 100%);"></div>
         <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(5,20,5,0.15) 0%,rgba(5,20,5,0.35) 100%);"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-14 z-10 relative text-center w-full">
           <span class="inline-block mb-4 fade-up" style="background:rgba(250,204,21,0.18);color:#fde047;font-size:0.72rem;letter-spacing:0.18em;font-weight:800;padding:4px 14px;border-radius:20px;text-transform:uppercase;border:1px solid rgba(250,204,21,0.3);">PM Surya Ghar Scheme Available</span>
-          <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-5 fade-up d1">Solar for Every<br><span style="color:#facc15;">Home & Business</span></h1>
-          <p class="text-green-200 text-lg max-w-xl mx-auto mb-8 fade-up d2" style="text-shadow:0 1px 6px rgba(0,0,0,0.5);">Get up to ₹78,000 central subsidy. Professional installation with lifetime support.</p>
+          <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight mb-5 fade-up d1 text-white">Solar for Every<br><span style="color:#facc15;">Home & Business</span></h1>
+          <p class="text-green-200 text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-6 sm:mb-8 fade-up d2">Get up to ₹1,08,000 central subsidy. Professional installation with lifetime support.</p>
           <div class="flex gap-4 justify-center flex-wrap fade-up d3">
-            <button class="btn-yellow px-10 py-3 text-base" onclick="showSection('scheme')">View Schemes</button>
-            <button class="btn-outline-white px-8 py-3 text-base" onclick="showSection('contact')">Talk to Expert</button>
+            <button class="btn-yellow px-6 py-2 text-sm sm:px-8 sm:py-3 sm:text-base" onclick="showSection('scheme')">View Schemes</button>
+            <button class="btn-outline-white px-6 py-2 text-sm sm:px-8 sm:py-3 sm:text-base" onclick="showSection('contact')">Talk to Expert</button>
           </div>
-          <div class="flex items-center justify-center gap-6 mt-10 fade-up d3">
-            <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:10px 20px;text-align:center;">
-              <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#facc15;">₹108K</div>
-              <div style="font-size:0.72rem;color:#bbf7d0;font-weight:600;">Max Subsidy</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:10px 20px;text-align:center;">
-              <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#facc15;">300</div>
-              <div style="font-size:0.72rem;color:#bbf7d0;font-weight:600;">Free Units/Month</div>
-            </div>
-            <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.2);border-radius:14px;padding:10px 20px;text-align:center;">
-              <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#facc15;">7%</div>
-              <div style="font-size:0.72rem;color:#bbf7d0;font-weight:600;">Loan Interest</div>
-            </div>
-          </div>
+          <div class="grid grid-cols-3 gap-2 sm:gap-4 mt-6">
+
+  <div class="stat-top-card">
+    <div class="stat-value">₹108K</div>
+    <div class="stat-label">Max Subsidy</div>
+  </div>
+
+  <div class="stat-top-card">
+    <div class="stat-value">300</div>
+    <div class="stat-label">Free Units/Month</div>
+  </div>
+
+  <div class="stat-top-card">
+    <div class="stat-value">6%</div>
+    <div class="stat-label">Loan Interest</div>
+  </div>
+
+</div>
         </div>
       </div>
-
       <!-- Slide 3 -->
       <div class="min-w-full h-full relative flex items-center" style="background:#0d1f0d;">
-        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1600&q=80&auto=format&fit=crop"
-          alt="Large solar farm with rows of panels"
-          class="absolute inset-0 w-full h-full object-cover" style="opacity:0.9;">
+        <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1600&q=80&auto=format&fit=crop" alt="Solar farm" class="absolute inset-0 w-full h-full object-cover" style="opacity:0.9;">
         <div class="absolute inset-0" style="background:linear-gradient(95deg,rgba(8,25,8,0.55) 0%,rgba(8,25,8,0.3) 45%,rgba(8,25,8,0.05) 100%);"></div>
         <div class="max-w-7xl mx-auto px-6 md:px-14 z-10 relative w-full">
           <div class="max-w-xl">
             <span class="mb-4 inline-block fade-up" style="font-size:0.72rem;letter-spacing:0.18em;font-weight:800;color:#86efac;text-transform:uppercase;background:rgba(22,163,74,0.25);padding:4px 14px;border-radius:20px;border:1px solid rgba(134,239,172,0.35);">Industrial & Commercial</span>
-            <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-5 fade-up d1 text-white">Scale Your<br><span style="color:#facc15;">Solar Power ⚡</span></h1>
-            <p class="text-green-100 text-lg max-w-lg mb-8 fade-up d2" style="text-shadow:0 1px 8px rgba(0,0,0,0.5);">Ground-mount & rooftop systems for factories, warehouses & large establishments. Accelerated depreciation benefits.</p>
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight mb-5 fade-up d1 text-white">Scale Your<br><span style="color:#facc15;">Solar Power ⚡</span></h1>
+            <p class="text-green-100 text-sm sm:text-base md:text-lg max-w-lg mb-6 sm:mb-8 fade-up d2">Ground-mount & rooftop systems for factories & warehouses. Accelerated depreciation benefits.</p>
             <div class="flex gap-4 flex-wrap fade-up d3">
-              <button class="btn-green px-8 py-3 text-base" onclick="showSection('services')">Explore Solutions</button>
-              <button class="btn-yellow px-8 py-3 text-base" onclick="showSection('contact')">Get Quote</button>
+              <button class="btn-green px-6 py-2 text-sm sm:px-8 sm:py-3 sm:text-base" onclick="showSection('services')">Explore Solutions</button>
+              <button class="btn-yellow px-6 py-2 text-sm sm:px-8 sm:py-3 sm:text-base" onclick="showSection('contact')">Get Quote</button>
             </div>
             <div class="flex flex-wrap gap-2 mt-6 fade-up d3">
               <span style="background:rgba(255,255,255,0.12);backdrop-filter:blur(6px);color:#fff;font-size:0.75rem;font-weight:600;padding:5px 13px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);">⚡ SCADA Monitoring</span>
@@ -276,41 +470,237 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
         </div>
       </div>
     </div>
-
-    <!-- Dots -->
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 items-center">
       <div class="dot active" onclick="goSlide(0)"></div>
       <div class="dot" onclick="goSlide(1)"></div>
       <div class="dot" onclick="goSlide(2)"></div>
     </div>
-    <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center font-bold text-xl" style="background:rgba(255,255,255,0.75);color:#14532d;box-shadow:0 4px 14px rgba(0,0,0,0.12);">&#8592;</button>
-    <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center font-bold text-xl" style="background:rgba(255,255,255,0.75);color:#14532d;box-shadow:0 4px 14px rgba(0,0,0,0.12);">&#8594;</button>
+   <button onclick="prevSlide()" class="arrow-btn hero-arrow left-3 sm:left-4">&#8592;</button>
+<button onclick="nextSlide()" class="arrow-btn hero-arrow right-5 sm:right-6">&#8594;</button>
   </div>
 
   <!-- STATS -->
   <div class="max-w-7xl mx-auto px-6 -mt-10 relative z-10">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="stat-card p-5 shadow-lg">
-        <div class="text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">500+</div>
-        <div class="text-sm text-green-700 mt-1 font-medium">Installations Done</div>
-      </div>
-      <div class="stat-card p-5 shadow-lg">
-        <div class="text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">5 MW+</div>
-        <div class="text-sm text-green-700 mt-1 font-medium">Capacity Installed</div>
-      </div>
-      <div class="stat-card p-5 shadow-lg">
-        <div class="text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">8+</div>
-        <div class="text-sm text-green-700 mt-1 font-medium">Years Experience</div>
-      </div>
-      <div class="stat-card p-5 shadow-lg">
-        <div class="text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">98%</div>
-        <div class="text-sm text-green-700 mt-1 font-medium">Customer Satisfaction</div>
-      </div>
+      <div class="stat-card p-4 sm:p-5 shadow-lg">
+  <div class="text-2xl sm:text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">
+    500+
+  </div>
+  <div class="text-xs sm:text-sm text-green-700 mt-2 font-medium leading-snug">
+    Installations<br>Done
+  </div>
+</div>
+
+<div class="stat-card p-4 sm:p-5 shadow-lg">
+  <div class="text-2xl sm:text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">
+    5 MW+
+  </div>
+  <div class="text-xs sm:text-sm text-green-700 mt-2 font-medium leading-snug">
+    Capacity<br>Installed
+  </div>
+</div>
+
+<div class="stat-card p-4 sm:p-5 shadow-lg">
+  <div class="text-2xl sm:text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">
+    8+
+  </div>
+  <div class="text-xs sm:text-sm text-green-700 mt-2 font-medium leading-snug">
+    Years<br>Experience
+  </div>
+</div>
+
+<div class="stat-card p-4 sm:p-5 shadow-lg">
+  <div class="text-2xl sm:text-3xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">
+    98%
+  </div>
+  <div class="text-xs sm:text-sm text-green-700 mt-2 font-medium leading-snug">
+    Customer<br>Satisfaction
+  </div>
+</div>
     </div>
   </div>
 
+  <div class="py-12 bg-white">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+
+    <!-- TEXT -->
+    <div>
+      <span class="section-label mb-2 inline-block">About Us</span>
+
+      <h2 class="text-2xl sm:text-3xl font-bold mt-2" style="color:#14532d;">
+        Clean Energy for <span style="color:#16a34a;">Every Home</span>
+      </h2>
+
+      <p class="text-green-800 mt-4 text-sm sm:text-base leading-relaxed">
+       We help homes and businesses switch to solar with reliable installation, reduced electricity costs, and long-term support. 
+    Our solutions are designed to be efficient, affordable, and future-ready.
+      </p>
+       <p class="text-green-700 mt-3 text-sm sm:text-base leading-relaxed">
+    From consultation to installation and maintenance, we ensure a seamless experience so you can enjoy clean energy without any hassle.
+  </p>
+
+      <button class="btn-yellow mt-4 px-4 py-2 text-sm" onclick="showSection('about')">
+        Learn More →
+      </button>
+    </div>
+
+    <!-- IMAGE -->
+   <div class="rounded-2xl overflow-hidden shadow-md max-h-[320px] sm:max-h-[320px]">
+      <img 
+        src="./assets/home-about (2).jpg"
+        alt="Solar"
+        class="w-full h-full object-cover"
+      >
+    </div>
+
+  </div>
+</div>
+<!-- HOME SERVICES SLIDER -->
+<div class="py-16" style="background:#fff;">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- HEADER -->
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-6 sm:mb-8">
+
+  <!-- LEFT -->
+  <div>
+    <span class="section-label mb-2 inline-block">Our Services</span>
+    
+    <h2 class="text-2xl sm:text-3xl font-extrabold mt-2 leading-tight" style="color:#14532d;">
+      What We <br class="sm:hidden">
+      <span style="color:#16a34a;">Offer</span>
+    </h2>
+  </div>
+
+  <!-- RIGHT BUTTON -->
+  <div class="mt-4 sm:mt-0">
+    <button class="btn-yellow px-5 py-2 text-sm" onclick="showSection('services')">
+      View All →
+    </button>
+  </div>
+
+</div>
+
+    <!-- SLIDER -->
+    <div class="home-svc-outer px-1 sm:px-0 relative">
+
+  <!-- DESKTOP LEFT ARROW -->
+  <button 
+    onclick="homeSvcPrev()" 
+    class="slider-arrow desktop-arrow left-arrow hidden sm:flex">
+    &#8592;
+  </button>
+
+  <!-- DESKTOP RIGHT ARROW -->
+  <button 
+    onclick="homeSvcNext()" 
+    class="slider-arrow desktop-arrow right-arrow hidden sm:flex">
+    &#8594;
+  </button>
+      <div class="home-svc-track" id="homeSvcTrack">
+
+        <!-- CARD 1 -->
+        <div class="svc-photo-card" onclick="showSection('contact')">
+          <img src="./assets/roof-top.avif" alt="Rooftop Solar" loading="lazy">
+          <span class="card-badge badge-green">Popular</span>
+          <div class="card-label">
+            <h3>Rooftop Solar</h3>
+            <p>On-grid & off-grid systems for homes and apartments.</p>
+          </div>
+          <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+            ☀️ Get Free Quote →
+          </button>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="svc-photo-card" onclick="showSection('contact')">
+          <img src="./assets/commercial.avif" alt="Commercial Solar" loading="lazy">
+          <div class="card-label">
+            <h3>Commercial Solar</h3>
+            <p>Large-scale systems for offices and industries.</p>
+          </div>
+          <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+            ☀️ Get Free Quote →
+          </button>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="svc-photo-card" onclick="showSection('contact')">
+          <img src="./assets/water-pump.avif" alt="Solar Water Pump" loading="lazy">
+          <span class="card-badge badge-yellow">New</span>
+          <div class="card-label">
+            <h3>Solar Water Pump</h3>
+            <p>DC & AC pumping for agriculture and irrigation.</p>
+          </div>
+          <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+            ☀️ Get Free Quote →
+          </button>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="svc-photo-card" onclick="showSection('contact')">
+          <img src="./assets/o&G.avif" alt="O&M Services" loading="lazy">
+          <div class="card-label">
+            <h3>O&M Services</h3>
+            <p>Maintenance and monitoring for peak performance.</p>
+          </div>
+          <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+            ☀️ Get Free Quote →
+          </button>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="svc-photo-card" onclick="showSection('contact')">
+          <img src="./assets/atta chakki.avif" alt="Solar Atta Chakki" loading="lazy">
+          <div class="card-label">
+            <h3>Solar Atta Chakki</h3>
+            <p>Cost-effective solar atta chakki for high performance.</p>
+          </div>
+          <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+            ☀️ Get Free Quote →
+          </button>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="svc-photo-card" onclick="showSection('contact')">
+         <img src="./assets/solar-consultant.jpg" alt="Solar Consultation" loading="lazy">
+          <span class="card-badge badge-green">Free</span>
+          <div class="card-label">
+            <h3>Solar Consultation</h3>
+            <p>Free site assessment and ROI analysis.</p>
+          </div>
+          <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+            ☀️ Get Free Quote →
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 🔥 NEW BOTTOM CONTROLS -->
+   <div class="flex items-center justify-center sm:justify-center mt-6 px-4">
+
+  <!-- LEFT ARROW (MOBILE ONLY) -->
+  <button onclick="homeSvcPrev()" class="slider-arrow sm:hidden mr-3">&#8592;</button>
+
+  <!-- DOTS (ALWAYS CENTER) -->
+  <div class="flex gap-2 items-center bg-white px-4 py-2 rounded-full shadow">
+    <div class="dot-dark active" id="hsd0" onclick="homeSvcGoTo(0)"></div>
+    <div class="dot-dark" id="hsd1" onclick="homeSvcGoTo(1)"></div>
+    <div class="dot-dark" id="hsd2" onclick="homeSvcGoTo(2)"></div>
+    <div class="dot-dark" id="hsd3" onclick="homeSvcGoTo(3)"></div>
+  </div>
+
+  <!-- RIGHT ARROW (MOBILE ONLY) -->
+  <button onclick="homeSvcNext()" class="slider-arrow sm:hidden ml-3">&#8594;</button>
+
+</div>
+
+  </div>
+</div>
+
   <!-- WHY US -->
-  <div class="max-w-7xl mx-auto px-6 py-20">
+  <div class="max-w-7xl mx-auto px-6 py-16">
     <div class="text-center mb-14">
       <span class="section-label mb-3 inline-block">Why Choose Us</span>
       <h2 class="text-4xl font-extrabold mt-3" style="color:#14532d;">India's Solar Experts<br><span style="color:#16a34a;">You Can Trust</span></h2>
@@ -319,7 +709,7 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
       <div class="text-center p-8 rounded-2xl bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 20px rgba(22,163,74,0.07);">
         <div class="icon-box mx-auto mb-4"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg></div>
         <h3 class="font-bold text-lg mb-2" style="color:#14532d;">Certified Installers</h3>
-        <p class="text-green-700 text-sm leading-relaxed">MNRE empanelled and NABCB-certified solar professionals with full safety compliance.</p>
+        <p class="text-green-700 text-sm leading-relaxed">Authorised Vendor for UPNEDA</p>
       </div>
       <div class="text-center p-8 rounded-2xl bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 20px rgba(22,163,74,0.07);">
         <div class="icon-box mx-auto mb-4"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
@@ -345,14 +735,8 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
         <p class="text-green-800 mb-4 leading-relaxed">Das Solar Solutions was founded with a clear mission: to make clean, affordable solar energy accessible to every Indian home and business. With over 8 years in the renewable energy sector, we've become a trusted name across residential, commercial, and industrial solar installations.</p>
         <p class="text-green-800 mb-8 leading-relaxed">Our team of certified engineers and technicians brings deep expertise in system design, installation, and long-term maintenance — ensuring your solar investment delivers returns for decades.</p>
         <div class="grid grid-cols-2 gap-4">
-          <div class="rounded-xl p-5 text-center bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 16px rgba(22,163,74,0.08);">
-            <div class="text-2xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">₹2 Cr+</div>
-            <div class="text-sm text-green-700 font-medium mt-1">Saved in electricity bills</div>
-          </div>
-          <div class="rounded-xl p-5 text-center bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 16px rgba(22,163,74,0.08);">
-            <div class="text-2xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">15 States</div>
-            <div class="text-sm text-green-700 font-medium mt-1">Operational presence</div>
-          </div>
+          <div class="rounded-xl p-5 text-center bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 16px rgba(22,163,74,0.08);"><div class="text-2xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">₹2 Cr+</div><div class="text-sm text-green-700 font-medium mt-1">Saved in electricity bills</div></div>
+          <div class="rounded-xl p-5 text-center bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 16px rgba(22,163,74,0.08);"><div class="text-2xl font-extrabold" style="font-family:'Syne',sans-serif;color:#16a34a;">15 States</div><div class="text-sm text-green-700 font-medium mt-1">Operational presence</div></div>
         </div>
       </div>
       <div class="relative">
@@ -361,107 +745,150 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
             <div class="text-8xl mb-4">☀️</div>
             <h3 class="text-2xl font-bold mb-2">Das Solar Solutions</h3>
             <p style="color:#86efac;">Since 2016 · Solar Excellence</p>
-            <div class="mt-5 flex gap-3 justify-center">
-              <span class="badge-yellow">MNRE Certified</span>
-              <span style="background:rgba(255,255,255,0.15);color:#fff;font-size:0.68rem;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;">ISO 9001</span>
-            </div>
+            
           </div>
         </div>
-        <div class="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-xl p-4" style="border:2px solid #dcfce7;">
-          <div class="text-sm font-bold" style="color:#14532d;">🏆 Best Solar Company</div>
-          <div class="text-xs text-green-600 mt-1">Renewable India Award 2023</div>
-        </div>
+        <div class="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-xl p-4" style="border:2px solid #dcfce7;"><div class="text-sm font-bold" style="color:#14532d;">🏆 Best Solar Company</div><div class="text-xs text-green-600 mt-1"></div></div>
       </div>
     </div>
-    <div class="mt-20">
-      <div class="text-center mb-10">
-        <span class="section-label mb-3 inline-block">Our Team</span>
-        <h2 class="text-3xl font-extrabold mt-3" style="color:#14532d;">Meet the Experts</h2>
-      </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="text-center p-7 rounded-2xl bg-white transition-all hover:shadow-xl" style="border:2px solid #dcfce7;">
-          <div class="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);">👨‍💼</div>
-          <h4 class="font-bold text-lg" style="color:#14532d;">Rajesh Das</h4>
-          <p class="text-sm font-semibold mt-1" style="color:#16a34a;">Founder & CEO</p>
-          <p class="text-green-700 text-sm mt-2">15+ years in renewable energy sector</p>
-        </div>
-        <div class="text-center p-7 rounded-2xl bg-white transition-all hover:shadow-xl" style="border:2px solid #dcfce7;">
-          <div class="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);">👨‍🔧</div>
-          <h4 class="font-bold text-lg" style="color:#14532d;">Amit Kumar</h4>
-          <p class="text-sm font-semibold mt-1" style="color:#16a34a;">Head of Engineering</p>
-          <p class="text-green-700 text-sm mt-2">Certified solar energy engineer, IIT alumni</p>
-        </div>
-        <div class="text-center p-7 rounded-2xl bg-white transition-all hover:shadow-xl" style="border:2px solid #dcfce7;">
-          <div class="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0);">👩‍💻</div>
-          <h4 class="font-bold text-lg" style="color:#14532d;">Priya Sharma</h4>
-          <p class="text-sm font-semibold mt-1" style="color:#16a34a;">Client Relations Head</p>
-          <p class="text-green-700 text-sm mt-2">Subsidy expert & customer success specialist</p>
-        </div>
-      </div>
+  <div class="mt-20 grid md:grid-cols-2 gap-10 items-center">
+
+  <!-- IMAGE SIDE -->
+  <div class="rounded-3xl overflow-hidden shadow-lg">
+    <img 
+      src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80&auto=format&fit=crop" 
+      alt="Solar Vision"
+      class="w-full h-full object-cover"
+    >
+  </div>
+
+  <!-- TEXT SIDE -->
+  <div>
+    <span class="section-label mb-3 inline-block">Our Vision</span>
+    
+    <h2 class="text-3xl sm:text-4xl font-extrabold mt-3 leading-tight" style="color:#14532d;">
+      Powering a <span style="color:#16a34a;">Greener Tomorrow</span>
+    </h2>
+
+    <p class="text-green-800 mt-5 leading-relaxed text-sm sm:text-base">
+      Our vision is to make clean and renewable solar energy accessible to every home and business across India. 
+      We aim to reduce electricity costs while promoting sustainability and energy independence.
+    </p>
+
+    <p class="text-green-700 mt-4 text-sm sm:text-base leading-relaxed">
+      By combining innovation, quality installation, and long-term support, we are committed to building a future 
+      where solar energy powers everyday life — efficiently, affordably, and responsibly.
+    </p>
+
+    <!-- OPTIONAL HIGHLIGHTS -->
+    <div class="flex flex-wrap gap-3 mt-6">
+      <span class="badge-green">🌱 Sustainable Energy</span>
+      <span class="badge-green">⚡ Cost Efficient</span>
+      <span class="badge-green">🇮🇳 Made for India</span>
     </div>
+  </div>
+
+</div>
   </div>
 </section>
 
+
 <!-- ===== SERVICES ===== -->
-<section id="services" class="section-hidden pt-24 pb-20 bg-white">
+<section id="services" class="section-hidden pt-24 pb-20" style="background:#f8fffe;">
   <div class="max-w-7xl mx-auto px-6">
+    
     <div class="text-center mb-14">
       <span class="section-label mb-3 inline-block">What We Offer</span>
-      <h2 class="text-4xl font-extrabold mt-3" style="color:#14532d;">Our Solar <span style="color:#16a34a;">Services</span></h2>
-      <p class="text-green-700 mt-3 max-w-xl mx-auto">End-to-end solar solutions from consultation to installation and beyond.</p>
+      <h2 class="text-4xl font-extrabold mt-3" style="color:#14532d;">
+        Our Solar <span style="color:#16a34a;">Services</span>
+      </h2>
+      <p class="text-sm sm:text-base text-green-700 mt-2 sm:mt-3 max-w-xl mx-auto">
+        End-to-end solar solutions from consultation to installation and beyond.
+      </p>
     </div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-      <div class="service-card p-6">
-        <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg></div>
-        <div class="flex items-center gap-2 mb-2"><h3 class="font-bold text-lg" style="color:#14532d;">Rooftop Solar</h3><span class="badge-green">Popular</span></div>
-        <p class="text-green-700 text-sm leading-relaxed">On-grid and off-grid rooftop solar systems for homes, apartments, and small businesses. Net metering enabled.</p>
-        <button class="btn-yellow w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
+
+    <!-- ✅ STATIC GRID (NO SLIDER) -->
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <!-- 1 -->
+      <div class="svc-photo-card" onclick="showSection('contact')">
+        
+         <img src="./assets/roof-top.avif" alt="Rooftop Solar" loading="lazy">
+        <span class="card-badge badge-green">Popular</span>
+        <div class="card-label">
+          <h3>Rooftop Solar</h3>
+          <p>On-grid & off-grid systems for homes and apartments.</p>
+        </div>
+        <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+          ☀️ Get Free Quote →
+        </button>
       </div>
-      <div class="service-card p-6">
-        <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg></div>
-        <h3 class="font-bold text-lg mb-2" style="color:#14532d;">Commercial Solar</h3>
-        <p class="text-green-700 text-sm leading-relaxed">Large-scale rooftop and ground-mounted systems for offices, hotels, malls, and industrial units.</p>
-        <button class="btn-outline-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
+
+      <!-- 2 -->
+      <div class="svc-photo-card" onclick="showSection('contact')">
+         <img src="./assets/commercial.avif" alt="Commercial Solar" loading="lazy">
+        <div class="card-label">
+          <h3>Commercial Solar</h3>
+          <p>Large-scale systems for offices & industries.</p>
+        </div>
+        <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+          ☀️ Get Free Quote →
+        </button>
       </div>
-      <div class="service-card p-6">
-        <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
-        <div class="flex items-center gap-2 mb-2"><h3 class="font-bold text-lg" style="color:#14532d;">Solar Water Pump</h3><span class="badge-yellow">New</span></div>
-        <p class="text-green-700 text-sm leading-relaxed">DC and AC solar pumping systems for agriculture, irrigation, and drinking water — zero electricity bills.</p>
-        <button class="btn-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
+
+      <!-- 3 -->
+      <div class="svc-photo-card" onclick="showSection('contact')">
+        
+         <img src="./assets/water-pump.avif" alt="Solar Water Pump" loading="lazy">
+        <span class="card-badge badge-yellow">New</span>
+        <div class="card-label">
+          <h3>Solar Water Pump</h3>
+          <p>Solar pumps for agriculture & irrigation.</p>
+        </div>
+        <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+          ☀️ Get Free Quote →
+        </button>
       </div>
-      <div class="service-card p-6">
-        <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-        <h3 class="font-bold text-lg mb-2" style="color:#14532d;">O&amp;M Services</h3>
-        <p class="text-green-700 text-sm leading-relaxed">Annual maintenance contracts for cleaning, monitoring, and servicing your solar plant for peak performance.</p>
-        <button class="btn-outline-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
+
+      <!-- 4 -->
+      <div class="svc-photo-card" onclick="showSection('contact')">
+        
+         <img src="./assets/o&G.avif" alt="O&M Services" loading="lazy">
+        <div class="card-label">
+          <h3>O&M Services</h3>
+          <p>Maintenance & monitoring for peak performance.</p>
+        </div>
+        <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+          ☀️ Get Free Quote →
+        </button>
       </div>
-      <div class="service-card p-6">
-        <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><rect x="1" y="6" width="22" height="13" rx="2"/><path d="M5 6V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></svg></div>
-        <h3 class="font-bold text-lg mb-2" style="color:#14532d;">Solar Street Lights</h3>
-        <p class="text-green-700 text-sm leading-relaxed">All-in-one and split solar street lighting for municipalities, housing societies, and rural areas.</p>
-        <button class="btn-yellow w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Get Quote →</button>
+
+      <!-- 5 -->
+      <div class="svc-photo-card" onclick="showSection('contact')">
+        <img src="https://images.unsplash.com/photo-1497440001374-f26997328c1b?w=800&q=80&auto=format&fit=crop">
+         <img src="./assets/atta chakki.avif" alt="Solar Atta Chakki" loading="lazy">
+        <div class="card-label">
+          <h3>Solar Atta Chakki</h3>
+          <p>Cost-effective solar atta chakki for high-performance.</p>
+        </div>
+        <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+          ☀️ Get Free Quote →
+        </button>
       </div>
-      <div class="service-card p-6">
-        <div class="icon-box mb-4"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
-        <h3 class="font-bold text-lg mb-2" style="color:#14532d;">Solar Consultation</h3>
-        <p class="text-green-700 text-sm leading-relaxed">Free site assessment, system sizing, ROI analysis, and subsidy guidance by our expert solar advisors.</p>
-        <button class="btn-green w-full mt-5 py-2 text-sm" onclick="showSection('contact')">Book Free →</button>
+
+      <!-- 6 -->
+      <div class="svc-photo-card" onclick="showSection('contact')">
+        <img src="./assets/solar-consultant.jpg" alt="Solar Consultation" loading="lazy">
+        <span class="card-badge badge-green">Free</span>
+        <div class="card-label">
+          <h3>Solar Consultation</h3>
+          <p>Free site visit & ROI analysis.</p>
+        </div>
+        <button class="hover-quote-btn" onclick="event.stopPropagation();showSection('contact')">
+          ☀️ Get Free Quote →
+        </button>
       </div>
-    </div>
-    <div class="rounded-3xl overflow-hidden shadow-2xl" style="border:4px solid #dcfce7;">
-      <div class="flex items-center gap-3 px-6 py-4" style="background:linear-gradient(90deg,#14532d,#166534);">
-        <div class="w-3 h-3 rounded-full" style="background:#facc15;"></div>
-        <div class="w-3 h-3 rounded-full" style="background:#86efac;"></div>
-        <div class="w-3 h-3 rounded-full" style="background:#22c55e;"></div>
-        <span class="text-green-200 text-sm ml-4">▶ How Solar Power Works — Das Solar Solutions</span>
-      </div>
-      <div class="relative" style="padding-bottom:56.25%;background:#0f1f0f;">
-        <iframe class="absolute inset-0 w-full h-full"
-          src="https://www.youtube.com/embed/xKxrkht7CpY?rel=0&modestbranding=1"
-          title="How Solar Power Works" frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen loading="lazy"></iframe>
-      </div>
+
     </div>
   </div>
 </section>
@@ -476,20 +903,17 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
     </div>
     <div class="rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-center gap-6" style="background:linear-gradient(135deg,#14532d,#166534);border:2px solid #22c55e;">
       <div class="text-4xl">🏛️</div>
-      <div class="flex-1 text-white">
-        <h3 class="font-bold text-xl">PM Surya Ghar Muft Bijli Yojana</h3>
-        <p class="text-green-200 text-sm mt-1">Get up to ₹78,000 central subsidy + free 300 units/month electricity for residential rooftop solar. We handle the complete application process.</p>
-      </div>
+      <div class="flex-1 text-white"><h3 class="font-bold text-xl">PM Surya Ghar Muft Bijli Yojana</h3><p class="text-green-200 text-sm mt-1">Get up to ₹1,08,000 central subsidy + free 300 units/month electricity. We handle the complete application process.</p></div>
       <button class="btn-yellow px-7 py-2 text-sm whitespace-nowrap" onclick="showSection('contact')">Apply Now →</button>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
       <div class="scheme-card bg-white">
         <div class="p-6" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-bottom:2px solid #bbf7d0;">
           <p class="text-xs font-bold uppercase tracking-widest text-green-500 mb-2">Starter</p>
-          <h3 class="text-3xl font-extrabold" style="color:#14532d;">1–3 kW</h3>
+          <h3 class="text-3xl font-extrabold" style="color:#14532d;">3 kW</h3>
           <p class="text-green-700 text-sm mt-1">Perfect for small homes</p>
-          <div class="mt-4"><span class="text-2xl font-bold" style="color:#14532d;">₹65,000</span><span class="text-green-600 text-sm"> onwards</span></div>
-          <p class="text-green-600 text-sm font-medium mt-1">💰 Save up to ₹30,000 with subsidy</p>
+          <div class="mt-4"><span class="text-2xl font-bold" style="color:#14532d;">₹72,000</span><span class="text-green-600 text-sm"> onwards</span></div>
+          <p class="text-green-600 text-sm font-medium mt-1">💰 Save up to ₹1,08,000 with subsidy</p>
         </div>
         <div class="p-6">
           <ul class="space-y-3 text-sm text-green-800">
@@ -504,10 +928,7 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
       </div>
       <div class="scheme-card scheme-popular bg-white">
         <div class="p-6" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-bottom:2px solid #16a34a;">
-          <div class="flex items-center justify-between mb-2">
-            <p class="text-xs font-bold uppercase tracking-widest text-green-500">Most Popular</p>
-            <span class="badge-green">⭐ Best Value</span>
-          </div>
+          <div class="flex items-center justify-between mb-2"><p class="text-xs font-bold uppercase tracking-widest text-green-500">Most Popular</p><span class="badge-green">⭐ Best Value</span></div>
           <h3 class="text-3xl font-extrabold" style="color:#14532d;">3–10 kW</h3>
           <p class="text-green-700 text-sm mt-1">Ideal for homes & small offices</p>
           <div class="mt-4"><span class="text-2xl font-bold" style="color:#14532d;">₹1.8 Lakh</span><span class="text-green-600 text-sm"> onwards</span></div>
@@ -547,10 +968,7 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
     </div>
     <div class="mt-10 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 bg-white" style="border:2px solid #dcfce7;box-shadow:0 4px 20px rgba(22,163,74,0.07);">
       <div class="text-4xl">🏦</div>
-      <div class="flex-1">
-        <h3 class="font-bold text-lg" style="color:#14532d;">Solar Loan Assistance</h3>
-        <p class="text-green-800 text-sm mt-1">Get solar loans at as low as 7% interest from nationalized banks including SBI, Bank of Baroda, and PNB. We assist with complete documentation and approval.</p>
-      </div>
+      <div class="flex-1"><h3 class="font-bold text-lg" style="color:#14532d;">Solar Loan Assistance</h3><p class="text-green-800 text-sm mt-1">Get solar loans at as low as 6% interest from Government banks including SBI, Bank of Baroda, and PNB. We assist with complete documentation and approval.</p></div>
       <button class="btn-green px-7 py-2 text-sm whitespace-nowrap" onclick="showSection('contact')">Apply for Loan →</button>
     </div>
   </div>
@@ -568,65 +986,27 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
       <div>
         <h3 class="text-xl font-bold mb-6" style="color:#14532d;">Reach Us Directly</h3>
         <div class="space-y-4">
-          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;">
-            <div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.41 2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div>
-            <div><div class="font-semibold text-sm" style="color:#14532d;">Phone</div><div class="text-green-700 text-sm">+91 9125835900</div><div class="text-green-700 text-sm">+91 8601810529</div></div>
-          </div>
-          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;">
-            <div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-            <div><div class="font-semibold text-sm" style="color:#14532d;">Email</div><div class="text-green-700 text-sm">dasenterprises3152@gmail.com</div><div class="text-green-700 text-sm">solar@dasinterprises.in</div></div>
-          </div>
-          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;">
-            <div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div><div class="font-semibold text-sm" style="color:#14532d;">Address</div><div class="text-green-700 text-sm">Z3V-16/P-03(NH-133), Kurshi Road, Gudamba,<br>Near Sai Enclave and SR Lawn,<br>Lucknow (Uttar Pradesh), India</div></div>
-          </div>
-          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;">
-            <div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-            <div><div class="font-semibold text-sm" style="color:#14532d;">Working Hours</div><div class="text-green-700 text-sm">Mon – Sat: 9:00 AM – 7:00 PM</div><div class="text-green-700 text-sm">Sunday: 10:00 AM – 4:00 PM</div></div>
-          </div>
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;"><div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.41 2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.81-.81a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 17z"/></svg></div><div><div class="font-semibold text-sm" style="color:#14532d;">Phone</div><div class="text-green-700 text-sm">+91 9125835900</div><div class="text-green-700 text-sm">+91 8601810529</div></div></div>
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;"><div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="font-semibold text-sm" style="color:#14532d;">Email</div><div class="text-green-700 text-sm">dasenterprises3152@gmail.com</div><div class="text-green-700 text-sm">solar@dasinterprises.in</div></div></div>
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;"><div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="font-semibold text-sm" style="color:#14532d;">Address</div><div class="text-green-700 text-sm">Z3V-16/P-03(NH-133), Kurshi Road, Gudamba,<br>Near Sai Enclave and SR Lawn,<br>Lucknow (Uttar Pradesh), India</div></div></div>
+          <div class="flex items-start gap-4 p-4 rounded-xl" style="background:#f0fdf4;border:1.5px solid #dcfce7;"><div class="icon-box flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="font-semibold text-sm" style="color:#14532d;">Working Hours</div><div class="text-green-700 text-sm">Mon – Sat: 9:00 AM – 7:00 PM</div><div class="text-green-700 text-sm">Sunday: 10:00 AM – 4:00 PM</div></div></div>
         </div>
       </div>
-
-      <!-- ✅ CONTACT FORM WITH EMAILJS -->
       <div class="rounded-3xl p-8 shadow-xl" style="background:#fff;border:2px solid #dcfce7;">
         <h3 class="text-xl font-bold mb-6" style="color:#14532d;">Send Us a Message</h3>
         <div id="contactForm">
           <div class="grid md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label class="block text-sm font-semibold text-green-800 mb-1">Full Name *</label>
-              <input type="text" id="fname" class="form-input" placeholder="Your full name">
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-green-800 mb-1">Email Address *</label>
-              <input type="email" id="femail" class="form-input" placeholder="your@email.com">
-            </div>
+            <div><label class="block text-sm font-semibold text-green-800 mb-1">Full Name *</label><input type="text" id="fname" class="form-input" placeholder="Your full name"></div>
+            <div><label class="block text-sm font-semibold text-green-800 mb-1">Email Address *</label><input type="email" id="femail" class="form-input" placeholder="your@email.com"></div>
           </div>
           <div class="grid md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label class="block text-sm font-semibold text-green-800 mb-1">Mobile Number *</label>
-              <input type="tel" id="fmobile" class="form-input" placeholder="+91 XXXXX XXXXX">
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-green-800 mb-1">Service Needed</label>
-              <select id="fservice" class="form-input">
-                <option>Select service</option>
-                <option>Rooftop Solar</option>
-                <option>Commercial Solar</option>
-                <option>Solar Water Pump</option>
-                <option>Solar Street Lights</option>
-                <option>O&amp;M Services</option>
-                <option>Consultation</option>
-              </select>
+            <div><label class="block text-sm font-semibold text-green-800 mb-1">Mobile Number *</label><input type="tel" id="fmobile" class="form-input" placeholder="+91 XXXXX XXXXX"></div>
+            <div><label class="block text-sm font-semibold text-green-800 mb-1">Service Needed</label>
+              <select id="fservice" class="form-input"><option>Select service</option><option>Rooftop Solar</option><option>Commercial Solar</option><option>Solar Water Pump</option><option>Solar Atta Chakki</option><option>O&M Services</option><option>Consultation</option></select>
             </div>
           </div>
-          <div class="mb-4">
-            <label class="block text-sm font-semibold text-green-800 mb-1">Full Address</label>
-            <input type="text" id="faddress" class="form-input" placeholder="Installation address / site location">
-          </div>
-          <div class="mb-6">
-            <label class="block text-sm font-semibold text-green-800 mb-1">Message</label>
-            <textarea id="fmessage" class="form-input" placeholder="Tell us about your requirement, existing electricity bill, roof size, etc."></textarea>
-          </div>
+          <div class="mb-4"><label class="block text-sm font-semibold text-green-800 mb-1">Full Address</label><input type="text" id="faddress" class="form-input" placeholder="Installation address / site location"></div>
+          <div class="mb-6"><label class="block text-sm font-semibold text-green-800 mb-1">Message</label><textarea id="fmessage" class="form-input" placeholder="Tell us about your requirement, electricity bill, roof size, etc."></textarea></div>
           <button class="btn-yellow w-full py-3 text-base" id="submitBtn" onclick="submitForm()">Send Message 🚀</button>
         </div>
         <div id="formSuccess" class="hidden text-center py-10">
@@ -646,16 +1026,15 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
     <div class="grid md:grid-cols-4 gap-10 pb-10" style="border-bottom:1px solid rgba(255,255,255,0.12);">
       <div class="col-span-1 md:col-span-2">
         <div class="flex items-center gap-2 mb-4 cursor-pointer" onclick="showSection('home')">
-          <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#facc15,#22c55e);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" fill="#14532d"/><line x1="12" y1="2" x2="12" y2="5.5" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="18.5" x2="12" y2="22" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="12" x2="5.5" y2="12" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="18.5" y1="12" x2="22" y2="12" stroke="#14532d" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
+          <div class="w-9 h-9  flex items-center justify-center" > <img 
+    src="./assets/RMOVE LOGO.png" 
+    alt="Das Solar Logo"
+    class="h-12 w-auto object-contain"
+  /><circle cx="12" cy="12" r="4.5" fill="#14532d"/><line x1="12" y1="2" x2="12" y2="5.5" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="18.5" x2="12" y2="22" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="12" x2="5.5" y2="12" stroke="#14532d" stroke-width="2" stroke-linecap="round"/><line x1="18.5" y1="12" x2="22" y2="12" stroke="#14532d" stroke-width="2" stroke-linecap="round"/></svg></div>
           <span style="font-family:'Syne',sans-serif;font-weight:800;color:#fff;">Das <span style="color:#facc15;">Solar Solutions</span></span>
         </div>
         <p class="text-sm leading-relaxed max-w-sm">India's trusted solar energy company. Empowering homes and businesses with clean, affordable solar power since 2016.</p>
-        <div class="flex gap-2 mt-4">
-          <span class="badge-yellow">MNRE Certified</span>
-          <span class="badge-green">ISO 9001</span>
-        </div>
+        <div class="flex gap-2 mt-4"><span class="badge-yellow">Authorised Vendor for UPNEDA</span></div>
       </div>
       <div>
         <h4 class="text-white font-bold text-sm mb-4">Quick Links</h4>
@@ -672,7 +1051,7 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
         <ul class="space-y-2 text-sm">
           <li>📞 +91 9125835900</li>
           <li>✉️ dasenterprises3152@gmail.com</li>
-          <li class="leading-relaxed">📍 Z3V-16/P-03(NH-133), Kurshi Road, Gudamba,<br>Near Sai Enclave and SR Lawn,<br>Lucknow (UP), India</li>
+          <li class="leading-relaxed">📍 Z3V-16/P-03(NH-133), Kurshi Road,<br>Gudamba, Near Sai Enclave,<br>Lucknow (UP), India</li>
         </ul>
       </div>
     </div>
@@ -684,7 +1063,7 @@ footer { background:#14532d; color:rgba(255,255,255,0.65); font-size:0.88rem; }
 </footer>
 
 <script>
-// ─── SECTION NAVIGATION ──────────────────────────────────────────────────────
+// ── SECTION NAV ──────────────────────────────────────────────────────────────
 const sections = ['home','about','services','scheme','contact'];
 function showSection(id) {
   sections.forEach(s => {
@@ -693,24 +1072,121 @@ function showSection(id) {
     if (n) n.classList.toggle('active', s === id);
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Restart services page slider when navigating to it
+  if (id === 'services') {
+    svcPageGoTo(0);
+    restartSvcPageTimer();
+  }
 }
 function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
 
-// ─── SLIDER ───────────────────────────────────────────────────────────────────
-let cur = 0, timer;
+// ── HERO SLIDER ───────────────────────────────────────────────────────────────
+let cur = 0, heroTimer;
 function goSlide(n) {
   cur = n;
   document.getElementById('sliderTrack').style.transform = `translateX(-${n * 100}%)`;
   document.querySelectorAll('.dot').forEach((d, i) => d.className = 'dot' + (i === n ? ' active' : ''));
-  clearInterval(timer);
-  timer = setInterval(next, 5000);
+  clearInterval(heroTimer);
+  heroTimer = setInterval(heroNext, 5000);
 }
-function next() { goSlide((cur + 1) % 3); }
+function heroNext() { goSlide((cur + 1) % 3); }
 function prevSlide() { goSlide((cur + 2) % 3); }
-function nextSlide() { next(); }
-timer = setInterval(next, 5000);
+function nextSlide() { heroNext(); }
+heroTimer = setInterval(heroNext, 5000);
 
-// ─── TOAST ────────────────────────────────────────────────────────────────────
+// ── HOME SERVICES SLIDER ──────────────────────────────────────────────────────
+const HOME_CARDS_VISIBLE = 3;
+const TOTAL_CARDS = 6;
+let svcIndex = 0;
+
+function calcCardWidth() {
+  const track = document.getElementById('homeSvcTrack');
+  if (!track) return 0;
+  const gap = 20;
+  const containerW = track.parentElement.offsetWidth;
+  return (containerW - gap * (HOME_CARDS_VISIBLE - 1)) / HOME_CARDS_VISIBLE + gap;
+}
+
+function homeSvcGoTo(n) {
+  const maxIndex = TOTAL_CARDS - HOME_CARDS_VISIBLE;
+  svcIndex = Math.max(0, Math.min(n, maxIndex));
+  const track = document.getElementById('homeSvcTrack');
+  track.style.transform = `translateX(-${svcIndex * calcCardWidth()}px)`;
+  document.querySelectorAll('.dot-dark').forEach((d, i) => {
+    d.className = 'dot-dark' + (i === svcIndex ? ' active' : '');
+  });
+}
+function homeSvcNext() { homeSvcGoTo(svcIndex + 1); }
+function homeSvcPrev() { homeSvcGoTo(svcIndex - 1); }
+
+let svcTimer = setInterval(homeSvcNext, 3500);
+document.getElementById('homeSvcTrack').addEventListener('mouseenter', () => clearInterval(svcTimer));
+document.getElementById('homeSvcTrack').addEventListener('mouseleave', () => { svcTimer = setInterval(homeSvcNext, 3500); });
+window.addEventListener('resize', () => homeSvcGoTo(svcIndex));
+
+// ── SERVICES PAGE SLIDER ──────────────────────────────────────────────────────
+const SVC_PAGE_TOTAL = 6;
+const SVC_PAGE_VISIBLE = 3; // 3 cards visible at once
+let svcPageIndex = 0;
+let svcPageTimer = null;
+
+function calcSvcPageCardWidth() {
+  const track = document.getElementById('svcPageTrack');
+  if (!track) return 0;
+  const gap = 24;
+  const containerW = track.parentElement.offsetWidth;
+  return (containerW - gap * (SVC_PAGE_VISIBLE - 1)) / SVC_PAGE_VISIBLE + gap;
+}
+
+function svcPageGoTo(n) {
+  const maxIndex = SVC_PAGE_TOTAL - SVC_PAGE_VISIBLE;
+  svcPageIndex = Math.max(0, Math.min(n, maxIndex));
+  const track = document.getElementById('svcPageTrack');
+  if (track) {
+    track.style.transform = `translateX(-${svcPageIndex * calcSvcPageCardWidth()}px)`;
+  }
+  // Update dots
+  const dots = document.querySelectorAll('#svcPageDots .dot-dark');
+  dots.forEach((d, i) => {
+    d.className = 'dot-dark' + (i === svcPageIndex ? ' active' : '');
+  });
+  // Update progress bar: total steps = maxIndex+1 = 4
+  const pct = ((svcPageIndex + 1) / (maxIndex + 1)) * 100;
+  const fill = document.getElementById('svcProgressFill');
+  if (fill) fill.style.width = pct + '%';
+  // Update counter
+  const counter = document.getElementById('svcPageCounter');
+  if (counter) counter.textContent = (svcPageIndex + 1) + ' / ' + (maxIndex + 1);
+}
+
+function svcPageNext() {
+  const maxIndex = SVC_PAGE_TOTAL - SVC_PAGE_VISIBLE;
+  svcPageGoTo(svcPageIndex >= maxIndex ? 0 : svcPageIndex + 1);
+}
+function svcPagePrev() {
+  const maxIndex = SVC_PAGE_TOTAL - SVC_PAGE_VISIBLE;
+  svcPageGoTo(svcPageIndex <= 0 ? maxIndex : svcPageIndex - 1);
+}
+
+function restartSvcPageTimer() {
+  clearInterval(svcPageTimer);
+  svcPageTimer = setInterval(svcPageNext, 3500);
+}
+restartSvcPageTimer();
+
+// Pause on hover
+const svcPageOuter = document.getElementById('svcPageOuter');
+if (svcPageOuter) {
+  svcPageOuter.addEventListener('mouseenter', () => clearInterval(svcPageTimer));
+  svcPageOuter.addEventListener('mouseleave', () => restartSvcPageTimer());
+}
+
+window.addEventListener('resize', () => {
+  svcPageGoTo(svcPageIndex);
+  homeSvcGoTo(svcIndex);
+});
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
 function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -718,7 +1194,7 @@ function showToast(msg, type = 'success') {
   setTimeout(() => { t.className = type; }, 4000);
 }
 
-// ─── CONTACT FORM WITH EMAILJS ────────────────────────────────────────────────
+// ── CONTACT FORM ──────────────────────────────────────────────────────────────
 async function submitForm() {
   const name    = document.getElementById('fname').value.trim();
   const email   = document.getElementById('femail').value.trim();
@@ -726,54 +1202,51 @@ async function submitForm() {
   const service = document.getElementById('fservice').value;
   const address = document.getElementById('faddress').value;
   const message = document.getElementById('fmessage').value;
-
-  if (!name || !email || !phone) {
-    showToast("Please fill required fields", "error");
-    return;
-  }
-
-  const btn = document.getElementById("submitBtn");
+  if (!name || !email || !phone) { showToast('⚠️ Please fill Name, Email & Mobile.', 'error'); return; }
+  const btn = document.getElementById('submitBtn');
   btn.disabled = true;
-  btn.innerHTML = `<span class="spinner"></span> Sending...`;
-
+  btn.innerHTML = '<span class="spinner"></span> Sending…';
   try {
-    await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      {
-        from_name: name,
-        from_email: email,
-        phone: phone,
-        service: service,
-        address: address,
-        message: message
-      }
-    );
-
-    showToast("Message sent successfully!");
-    document.getElementById("contactForm").classList.add("hidden");
-    document.getElementById("formSuccess").classList.remove("hidden");
-
-  } catch (error) {
-    console.error(error);
-    showToast("Failed to send message", "error");
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { from_name:name, from_email:email, phone, service, address, message });
+    showToast('✅ Message sent! We\'ll call you within 24 hrs.');
+    document.getElementById('contactForm').classList.add('hidden');
+    document.getElementById('formSuccess').classList.remove('hidden');
+  } catch(e) {
+    console.error(e);
+    showToast('❌ Failed to send. Please call us directly.', 'error');
+    btn.disabled = false;
+    btn.innerHTML = 'Send Message 🚀';
   }
-
-  btn.disabled = false;
-  btn.innerHTML = "Send Message 🚀";
 }
-
 function resetForm() {
-  document.getElementById("contactForm").classList.remove("hidden");
-  document.getElementById("formSuccess").classList.add("hidden");
-
-  document.getElementById('fname').value = "";
-  document.getElementById('femail').value = "";
-  document.getElementById('fmobile').value = "";
-  document.getElementById('fservice').value = "Select service";
-  document.getElementById('faddress').value = "";
-  document.getElementById('fmessage').value = "";
+  ['fname','femail','fmobile','faddress','fmessage'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('fservice').selectedIndex = 0;
+  document.getElementById('contactForm').classList.remove('hidden');
+  document.getElementById('formSuccess').classList.add('hidden');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = false; btn.innerHTML = 'Send Message 🚀';
 }
+
+let homeAutoSlide;
+
+function startHomeAutoSlide() {
+  homeAutoSlide = setInterval(() => {
+    homeSvcNext();
+  }, 3000);
+}
+
+function stopHomeAutoSlide() {
+  clearInterval(homeAutoSlide);
+}
+
+window.addEventListener("load", () => {
+  startHomeAutoSlide();
+});
+
+const homeSlider = document.getElementById("homeSvcTrack");
+
+homeSlider.addEventListener("mouseenter", stopHomeAutoSlide);
+homeSlider.addEventListener("mouseleave", startHomeAutoSlide);
 </script>
 </body>
 </html>
