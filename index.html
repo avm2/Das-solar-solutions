@@ -16,6 +16,7 @@
     const EMAILJS_SERVICE_ID = 'service_q907ut2';
     const EMAILJS_TEMPLATE_ID = 'template_7ygv7rk';
     const EMAILJS_PUBLIC_KEY = 'zcfuIGJjNq9Kuxjl4';
+    const EMAILJS_COMPLAINT_TEMPLATE_ID = 'template_gfw9fpb'; 
     emailjs.init(EMAILJS_PUBLIC_KEY);
   </script>
 
@@ -664,6 +665,7 @@
         <span class="nav-link" id="nav-services" onclick="showSection('services')">Services</span>
         <span class="nav-link" id="nav-scheme" onclick="showSection('scheme')">Schemes</span>
         <span class="nav-link" id="nav-contact" onclick="showSection('contact')">Contact</span>
+        <span class="nav-link" id="nav-complaint" onclick="showSection('complaint')">Complaint</span>
       </div>
       <button class="btn-yellow px-5 py-2 text-sm hidden md:block" onclick="showSection('contact')">☀️ Free Quote</button>
       <button class="md:hidden text-white" onclick="toggleMobile()">
@@ -678,6 +680,7 @@
       <span class="nav-link block py-2 border-b border-green-700" onclick="showSection('services');toggleMobile()">Services</span>
       <span class="nav-link block py-2 border-b border-green-700" onclick="showSection('scheme');toggleMobile()">Schemes</span>
       <span class="nav-link block py-2" onclick="showSection('contact');toggleMobile()">Contact</span>
+      <span class="nav-link block py-2" onclick="showSection('complaint');toggleMobile()">Complaint</span>
       <button class="btn-yellow w-full py-2 mt-3 text-sm" onclick="showSection('contact');toggleMobile()">☀️ Get Free Quote</button>
     </div>
   </nav>
@@ -1004,6 +1007,66 @@
     </div>
   </section>
 
+  <!-- ===== COMPLAINT ===== -->
+<section id="complaint" class="section-hidden pt-24 pb-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-14">
+      <span class="section-label mb-3 inline-block">Customer Support</span>
+      <h2 class="text-4xl font-extrabold mt-3" style="color:#14532d;">Register a <span style="color:#16a34a;">Complaint</span></h2>
+      <p class="text-green-700 mt-3">We take your issues seriously. Submit your complaint and we'll respond within 24 hours.</p>
+    </div>
+    <div class="max-w-2xl mx-auto rounded-3xl p-8 shadow-xl" style="background:#fff;border:2px solid #dcfce7;">
+     <div id="complaintForm">
+  <div class="grid md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-semibold text-green-800 mb-1">Full Name *</label>
+      <input type="text" id="cname" class="form-input" placeholder="Your full name">
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-green-800 mb-1">Consumer Mobile Number *</label>
+      <input type="tel" id="cmobile" class="form-input" placeholder="+91 XXXXX XXXXX">
+    </div>
+  </div>
+  <div class="grid md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <label class="block text-sm font-semibold text-green-800 mb-1">Consumer Number</label>
+      <input type="text" id="cconsumer" class="form-input" placeholder="e.g. 123456789">
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-green-800 mb-1">Installation Date</label>
+      <input type="date" id="cdate" class="form-input">
+    </div>
+  </div>
+  <div class="mb-4">
+    <label class="block text-sm font-semibold text-green-800 mb-1">Address *</label>
+    <input type="text" id="caddress" class="form-input" placeholder="Installation site address">
+  </div>
+  <div class="mb-4">
+    <label class="block text-sm font-semibold text-green-800 mb-1">Problem Type *</label>
+    <select id="cproblem" class="form-input">
+      <option value="">Select problem type</option>
+      <option value="ECDB">ECDB</option>
+      <option value="BCDB">BCDB</option>
+      <option value="ECDB & BCDB">ECDB &amp; BCDB</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+  <div class="mb-6">
+    <label class="block text-sm font-semibold text-green-800 mb-1">Comment / Description</label>
+    <textarea id="ccomment" class="form-input" placeholder="Describe the problem in detail..."></textarea>
+  </div>
+  <button class="btn-yellow w-full py-3 text-base" id="complaintBtn" onclick="submitComplaint()">Submit Complaint 📋</button>
+</div>
+      <div id="complaintSuccess" class="hidden text-center py-10">
+        <div class="text-5xl mb-4">✅</div>
+        <h3 class="text-xl font-bold mb-2" style="color:#14532d;">Complaint Registered!</h3>
+        <p class="text-green-700 text-sm">Our team will contact you within 24 hours to resolve your issue.</p>
+        <button class="btn-green px-6 py-2 mt-4 text-sm" onclick="resetComplaint()">Submit Another</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   <!-- FOOTER -->
   <footer class="pt-14 pb-8">
@@ -1151,7 +1214,7 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSysModalBtn(); });
 
     // ─── SECTION NAV ─────────────────────────────────────────────────────────────
-    const sections = ['home','about','services','scheme','contact'];
+    const sections = ['home','about','services','scheme','contact','complaint'];
     function showSection(id) {
       sections.forEach(s => {
         document.getElementById(s).classList.toggle('section-hidden', s !== id);
@@ -1175,6 +1238,60 @@
     function prevSlide() { goSlide((cur + 2) % 3); }
     function nextSlide() { heroNext(); }
     heroTimer = setInterval(heroNext, 5000);
+
+async function submitComplaint() {
+  const name     = document.getElementById('cname').value.trim();
+  const mobile   = document.getElementById('cmobile').value.trim();
+  const consumer = document.getElementById('cconsumer').value.trim();
+  const address  = document.getElementById('caddress').value.trim();
+  const problem  = document.getElementById('cproblem').value;
+  const date     = document.getElementById('cdate').value;
+  const comment  = document.getElementById('ccomment').value.trim();
+
+  if (!name)    { showToast('⚠️ Please enter your name', 'error'); return; }
+  if (!mobile)  { showToast('⚠️ Please enter mobile number', 'error'); return; }
+  if (!address) { showToast('⚠️ Please enter address', 'error'); return; }
+  if (!problem) { showToast('⚠️ Please select problem type', 'error'); return; }
+
+  const btn = document.getElementById('complaintBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Submitting…';
+
+  // Uses complaint template if defined, otherwise falls back to contact template
+  const templateId = (typeof EMAILJS_COMPLAINT_TEMPLATE_ID !== 'undefined')
+    ? EMAILJS_COMPLAINT_TEMPLATE_ID
+    : EMAILJS_TEMPLATE_ID;
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID, templateId, {
+      from_name:         name,
+      phone:             mobile,
+      consumer_number:   consumer || 'Not provided',
+      address:           address,
+      problem_type:      problem,
+      installation_date: date || 'Not provided',
+      message:           comment || 'No comment provided'
+    });
+    showToast('✅ Complaint submitted! We\'ll contact you within 24 hrs.');
+    document.getElementById('complaintForm').classList.add('hidden');
+    document.getElementById('complaintSuccess').classList.remove('hidden');
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Submission failed. Please call us directly.', 'error');
+    btn.disabled = false;
+    btn.innerHTML = 'Submit Complaint 📋';
+  }
+}
+
+function resetComplaint() {
+  ['cname','cmobile','cconsumer','caddress','ccomment','cdate'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('cproblem').selectedIndex = 0;
+  document.getElementById('complaintForm').classList.remove('hidden');
+  document.getElementById('complaintSuccess').classList.add('hidden');
+  const btn = document.getElementById('complaintBtn');
+  btn.disabled = false;
+  btn.innerHTML = 'Submit Complaint 📋';
+}
 
     // ═══════════════════════════════════════════════════════════════
     // HOME SERVICES SLIDER — INFINITE LOOP, 1 CARD AT A TIME
